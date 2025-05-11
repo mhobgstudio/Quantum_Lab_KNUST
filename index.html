@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantum Physics Lab Guides - KNUST Department of Physics</title>
+    <link rel="icon" type="image/png" href="COS.png">
+    <style>
+        :root {
+            --primary-color: #1a237e;
+            --secondary-color: #7c4dff;
+            --accent-color: #00b0ff;
+            --background-color: #0a192f;
+            --text-color: #e6f1ff;
+            --text-color-secondary: #e6f1ff;
+            --card-bg: rgba(15, 32, 59, 0.95);
+            --border-radius: 12px;
+            --glow-color: rgba(124, 77, 255, 0.3);
+            --table-text: #ffffff;
+            --table-row-hover: rgba(124, 77, 255, 0.3);
+        }
+
+        :root[data-theme="quantum-dark"] {
+            --primary-color: #1a237e;
+            --secondary-color: #7c4dff;
+            --accent-color: #00b0ff;
+            --background-color: #0a192f;
+            --text-color: #ffffff;
+            --text-color-secondary: #e6f1ff;
+            --card-bg: rgba(15, 32, 59, 0.95);
+            --glow-color: rgba(124, 77, 255, 0.3);
+            --table-text: #ffffff;
+            --table-row-hover: rgba(124, 77, 255, 0.3);
+        }
+
+        :root[data-theme="quantum-light"] {
+            --primary-color: #3f51b5;
+            --secondary-color: #7986cb;
+            --accent-color: #2196f3;
+            --background-color: #f0f4ff;
+            --text-color: #1a237e;
+            --text-color-secondary: #2c3e50;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --glow-color: rgba(63, 81, 181, 0.3);
+            --table-text: #1a237e;
+            --table-row-hover: rgba(63, 81, 181, 0.15);
+        }
+
+        :root[data-theme="quantum-matrix"] {
+            --primary-color: #00ff00;
+            --secondary-color: #32cd32;
+            --accent-color: #98fb98;
+            --background-color: #000000;
+            --text-color: #00ff00;
+            --text-color-secondary: #98fb98;
+            --card-bg: rgba(0, 20, 0, 0.95);
+            --glow-color: rgba(0, 255, 0, 0.3);
+            --table-text: #00ff00;
+            --table-row-hover: rgba(0, 255, 0, 0.2);
+        }
+
+        :root[data-theme="quantum-neon"] {
+            --primary-color: #ff1e6c;
+            --secondary-color: #00fff0;
+            --accent-color: #8a2be2;
+            --background-color: #0c0c1e;
+            --text-color: #ffffff;
+            --text-color-secondary: #00fff0;
+            --card-bg: rgba(12, 12, 30, 0.95);
+            --glow-color: rgba(255, 30, 108, 0.3);
+            --table-text: #00fff0;
+            --table-row-hover: rgba(255, 30, 108, 0.2);
+        }
+
+        @keyframes quantum-glow {
+            0% { box-shadow: 0 0 5px var(--glow-color); }
+            50% { box-shadow: 0 0 20px var(--glow-color), 0 0 30px var(--accent-color); }
+            100% { box-shadow: 0 0 5px var(--glow-color); }
+        }
+
+        @keyframes wave {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes particle-flow {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 77, 255, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(0, 176, 255, 0.1) 0%, transparent 20%),
+                linear-gradient(60deg, rgba(26, 35, 126, 0.1) 0%, transparent 50%);
+            background-attachment: fixed;
+            animation: theme-transition 0.3s ease;
+            text-shadow: 0 0 1px var(--text-color-secondary);
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: particle-flow 8s linear infinite;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            height: 80px;
+            width: auto;
+            transition: transform 0.3s ease;
+            animation: wave 3s ease-in-out infinite;
+        }
+
+        .logo:hover {
+            transform: scale(1.1);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+            text-shadow: 0 0 10px var(--glow-color),
+                         0 0 20px var(--glow-color);
+            letter-spacing: 1px;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            color: var(--accent-color);
+            margin: 1.5rem 0;
+            padding: 0.5rem 0;
+            border-bottom: 3px solid var(--secondary-color);
+            text-shadow: 0 0 5px var(--glow-color);
+            letter-spacing: 0.5px;
+        }
+
+        h3 {
+            font-size: 1.4rem;
+            color: var(--secondary-color);
+            margin: 1rem 0;
+            text-shadow: 0 0 3px var(--glow-color);
+            letter-spacing: 0.5px;
+        }
+
+        .lab-guide {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(124, 77, 255, 0.2);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lab-guide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent, rgba(124, 77, 255, 0.1), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.5s ease;
+        }
+
+        .lab-guide:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            animation: quantum-glow 2s ease-in-out infinite;
+        }
+
+        .lab-guide:hover::before {
+            transform: translateX(100%);
+        }
+
+        .objective, .materials {
+            background: rgba(124, 77, 255, 0.1);
+            padding: 1.8rem;
+            border-radius: var(--border-radius);
+            margin: 1.5rem 0;
+            border-left: 4px solid var(--secondary-color);
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px var(--glow-color);
+        }
+
+        .objective:hover, .materials:hover {
+            background: rgba(124, 77, 255, 0.15);
+            transform: translateX(5px);
+            border-left-width: 8px;
+        }
+
+        .objective h3, .materials h3 {
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            text-shadow: 0 0 5px var(--glow-color);
+        }
+
+        .simulation-link {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--accent-color) 100%);
+            color: white;
+            padding: 12px 24px;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            margin: 1rem 0;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 0.5px;
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .simulation-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.5s ease;
+        }
+
+        .simulation-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px var(--glow-color);
+            text-shadow: 0 0 10px var(--glow-color);
+            letter-spacing: 1px;
+        }
+
+        .simulation-link:hover::before {
+            transform: translateX(100%);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 1rem 0;
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            border: 1px solid var(--secondary-color);
+            box-shadow: 0 0 10px var(--glow-color);
+        }
+
+        th {
+            background: var(--primary-color);
+            color: #ffffff;
+            font-weight: 600;
+            text-shadow: 0 0 5px var(--glow-color);
+            padding: 15px;
+            font-size: 1.1em;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid var(--secondary-color);
+        }
+
+        td {
+            padding: 12px 15px;
+            color: var(--table-text);
+            border-bottom: 1px solid rgba(124, 77, 255, 0.2);
+            font-size: 1em;
+            letter-spacing: 0.3px;
+            transition: all 0.3s ease;
+        }
+
+        tr {
+            transition: all 0.3s ease;
+            background: transparent;
+        }
+
+        tr:nth-child(even) {
+            background-color: rgba(124, 77, 255, 0.1);
+        }
+
+        tr:hover {
+            background-color: var(--table-row-hover);
+            transform: translateX(5px);
+        }
+
+        tr:hover td {
+            color: var(--text-color);
+            text-shadow: 0 0 5px var(--glow-color);
+        }
+
+        ul, ol {
+            padding-left: 1.5rem;
+            margin: 1rem 0;
+            color: var(--text-color);
+        }
+
+        li {
+            margin-bottom: 0.8rem;
+            transition: all 0.3s ease;
+            padding: 0.3rem 0;
+            letter-spacing: 0.3px;
+        }
+
+        li:hover {
+            transform: translateX(5px);
+            color: var(--accent-color);
+            text-shadow: 0 0 5px var(--glow-color);
+        }
+
+        .footer {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: particle-flow 8s linear infinite;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .logo-container {
+                flex-wrap: wrap;
+                justify-content: center;
+                margin-bottom: 1rem;
+            }
+
+            .logo {
+                height: 60px;
+            }
+
+            .container {
+                padding: 0 15px;
+            }
+
+            .lab-guide {
+                padding: 1.5rem;
+            }
+        }
+
+        /* Quantum-themed scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--background-color);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--secondary-color);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-color);
+        }
+
+        /* Theme Switcher Styles */
+        .theme-switcher {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+            padding: 10px;
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: 0 0 15px var(--glow-color);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(124, 77, 255, 0.2);
+        }
+
+        .theme-option {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .theme-option::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .theme-option:hover {
+            transform: scale(1.1);
+        }
+
+        .theme-option.active::after {
+            border-color: var(--accent-color);
+            animation: quantum-spin 2s linear infinite;
+        }
+
+        @keyframes quantum-spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .theme-quantum-dark {
+            background: linear-gradient(135deg, #1a237e, #7c4dff);
+        }
+
+        .theme-quantum-light {
+            background: linear-gradient(135deg, #3f51b5, #7986cb);
+        }
+
+        .theme-quantum-matrix {
+            background: linear-gradient(135deg, #000000, #00ff00);
+        }
+
+        .theme-quantum-neon {
+            background: linear-gradient(135deg, #ff1e6c, #00fff0);
+        }
+
+        /* Add to existing animations */
+        @keyframes theme-transition {
+            0% { opacity: 0; transform: scale(0.98); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        /* Enhanced text styles */
+        p {
+            color: var(--text-color);
+            line-height: 1.8;
+            letter-spacing: 0.3px;
+        }
+
+        /* Add text selection color */
+        ::selection {
+            background: var(--secondary-color);
+            color: var(--text-color);
+            text-shadow: none;
+        }
+
+        .toggle-answer-btn {
+            margin-left: 10px;
+            padding: 2px 10px;
+            font-size: 0.95em;
+            border-radius: 6px;
+            border: 1px solid var(--secondary-color);
+            background: var(--card-bg);
+            color: var(--accent-color);
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+        }
+        .toggle-answer-btn:hover {
+            background: var(--accent-color);
+            color: #fff;
+        }
+        .lab-answer {
+            display: none;
+            margin: 0.5em 0 1em 2em;
+            padding: 0.7em 1em;
+            background: rgba(124,77,255,0.08);
+            border-left: 3px solid var(--accent-color);
+            border-radius: 8px;
+            color: var(--text-color);
+        }
+        .lab-question {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5em;
+        }
+        .lab-question-text {
+            flex: 1;
+        }
+        .lab-question-list {
+            list-style: decimal inside;
+            margin: 1em 0 1em 1em;
+            padding: 0;
+        }
+        .lab-question-list li {
+            margin-bottom: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <div class="theme-switcher">
+        <div class="theme-option theme-quantum-dark active" onclick="setTheme('quantum-dark')" title="Quantum Dark"></div>
+        <div class="theme-option theme-quantum-light" onclick="setTheme('quantum-light')" title="Quantum Light"></div>
+        <div class="theme-option theme-quantum-matrix" onclick="setTheme('quantum-matrix')" title="Quantum Matrix"></div>
+        <div class="theme-option theme-quantum-neon" onclick="setTheme('quantum-neon')" title="Quantum Neon"></div>
+    </div>
+
+    <script>
+        function setTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            
+            // Update active state of theme options
+            document.querySelectorAll('.theme-option').forEach(option => {
+                option.classList.remove('active');
+                if (option.classList.contains('theme-' + theme)) {
+                    option.classList.add('active');
+                }
+            });
+
+            // Store the selected theme in localStorage
+            localStorage.setItem('selected-theme', theme);
+        }
+
+        // Load saved theme or default to quantum-dark
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('selected-theme') || 'quantum-dark';
+            setTheme(savedTheme);
+        });
+
+        function toggleAnswer(btn, id) {
+            const ans = document.getElementById(id);
+            if (ans.style.display === 'none') {
+                ans.style.display = 'block';
+                btn.textContent = 'Hide Answer';
+            } else {
+                ans.style.display = 'none';
+                btn.textContent = 'Show Answer';
+            }
+        }
+    </script>
+
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-container">
+                <img src="MCP.png" alt="MCP Logo" class="logo">
+                <img src="COS.png" alt="College of Science Logo" class="logo">
+                <img src="knust-logo_freelogovectors.net_.png" alt="KNUST Logo" class="logo">
+            </div>
+            <h1>Quantum Physics Lab Guides</h1>
+        </div>
+    </header>
+
+    <div class="container">
+        <h1>Quantum Physics Lab Guides</h1>
+
+        <div class="lab-guide">
+            <h2>Uncertainty and Probability</h2>
+            <div class="objective">
+                <h3>🧪 OBJECTIVE</h3>
+                <p>By the end of the lesson, the student will be able to explain the term uncertainty in relation to quantum science.</p>
+                <p><strong>RPK:</strong> The student can perform simple algebraic operations, construct a histogram from frequency tables, solve basic probability exercises (demonstrate with a coin toss).</p>
+            </div>
+            <div class="materials">
+                <h3>✅ MATERIALS</h3>
+                <ul>
+                    <li>Cubes (Dice)</li>
+                    <li>Graph sheets</li>
+                    <li>Worksheets</li>
+                </ul>
+            </div>
+            <h3>📝 ACTIVITIES</h3>
+            <ol>
+                <li>Using questions and answers, find out what the student already knows from the RPK.</li>
+                <li>Let the students brainstorm to give their understanding of "Uncertainty".</li>
+                <li>Let the students attempt to classify the outcome of a few physical events as "certain" or "uncertain".</li>
+                <li>Revise the concept of Standard deviation and its role in the Uncertainty principle.</li>
+                <li>In groups, guide the students to set up two dice with different colored dots, numbered 1 to 6.</li>
+                <li>
+                    <ul>
+                        <li>Ask the students to roll the two Dice 14 times and record the sum of each roll in Observation Table A.</li>
+                        <li>Have a discussion based on the following:<br>(α) Mean<br>(β) Most probable (mode)</li>
+                    </ul>
+                </li>
+                <li>Guide learners to complete the "Observation Table B".</li>
+                <li>Guide learners to construct a frequency table from the "Observation Table B" and discuss it. Name this table "Observation Table C".</li>
+                <li>Guide the students to plot a histogram from the frequency table using their graph sheets and let them discuss their observations.</li>
+                <li>Guide the students to quantify the Uncertainty in terms of Standard deviation using the histogram.</li>
+                <li>Explain the results and discuss the significance of the activities and the results.</li>
+            </ol>
+            <h3>📊 OBSERVATION TABLE A</h3>
+            <p>Roll two dice 14 times and record their sum in the spaces provided below.</p>
+            <img src="sumTotal.png" alt="Observation Table A: Frequency of Dice Sums" style="max-width:100%;margin:1rem 0;">
+            <ol class="lab-question-list">
+                <li>
+                    <div class="lab-question"><span class="lab-question-text">Write down your observation(s) from the table A above.</span>
+                        <button class="toggle-answer-btn" onclick="toggleAnswer(this, 'uncertainty-a1')">Show Answer</button></div>
+                    <div class="lab-answer" id="uncertainty-a1">The sums are not equally likely; some (like 7) appear more often. The distribution is not uniform.</div>
+                </li>
+                <li>
+                    <div class="lab-question"><span class="lab-question-text">What do you think will happen if you continue to roll the two dice a large number of times (100)?</span>
+                        <button class="toggle-answer-btn" onclick="toggleAnswer(this, 'uncertainty-a2')">Show Answer</button></div>
+                    <div class="lab-answer" id="uncertainty-a2">The frequency of each sum will approach the theoretical probability. The most common sum will be 7, and the distribution will form a bell shape.</div>
+                </li>
+            </ol>
+            <h3>📋 OBSERVATION TABLE B</h3>
+            <p>Without rolling the two dice this time, complete the table by filling the blank spaces with possible outcomes of sums when two dice are rolled.</p>
+            <img src="dieTable.png" alt="Observation Table B: All Possible Sums of Two Dice" style="max-width:100%;margin:1rem 0;">
+            <ol class="lab-question-list">
+                <li>
+                    <div class="lab-question"><span class="lab-question-text">Write down your observation from the table B.</span>
+                        <button class="toggle-answer-btn" onclick="toggleAnswer(this, 'uncertainty-b1')">Show Answer</button></div>
+                    <div class="lab-answer" id="uncertainty-b1">There are more ways to get some sums (like 7) than others (like 2 or 12). The number of ways increases to 7, then decreases.<br><img src="dieTableAns.png" alt="Answered Table of Sums" style="max-width:100%;margin:1rem 0;"></div>
+                </li>
+            </ol>
+            <h3>📈 OBSERVATION TABLE C</h3>
+            <p>Construct a frequency table from the Observation Table B above.</p>
+            <img src="dieFrequency.png" alt="Observation Table C: Frequency Table" style="max-width:100%;margin:1rem 0;">
+            <ol class="lab-question-list">
+                <li>
+                    <div class="lab-question"><span class="lab-question-text">Write down your observation from Table C.</span>
+                        <button class="toggle-answer-btn" onclick="toggleAnswer(this, 'uncertainty-c1')">Show Answer</button></div>
+                    <div class="lab-answer" id="uncertainty-c1">The frequency table shows a symmetric distribution centered at 7. The probability of each sum matches the number of ways to roll it.<br><img src="dieFrequencyAns.png" alt="Answered Frequency Table" style="max-width:100%;margin:1rem 0;"></div>
+                </li>
+            </ol>
+            <h3>📉 HISTOGRAM</h3>
+            <p>Draw a HISTOGRAM for Table C on a graph sheet.</p>
+            <img src="diehistogram.png" alt="Histogram of Dice Sums" style="max-width:100%;margin:1rem 0;">
+            <ol class="lab-question-list">
+                <li>
+                    <div class="lab-question"><span class="lab-question-text">Describe your observation on the histogram.</span>
+                        <button class="toggle-answer-btn" onclick="toggleAnswer(this, 'uncertainty-h1')">Show Answer</button></div>
+                    <div class="lab-answer" id="uncertainty-h1">The histogram forms a bell-shaped curve, peaking at 7. This shows the most probable outcome is 7, and the distribution is not uniform.</div>
+                </li>
+            </ol>
+            <h3>📝 FOOTNOTE: Quantum Uncertainty</h3>
+            <p>In quantum physics: Particles like electrons don't have a single definite position or momentum before measurement. Instead, they're described by a wavefunction, which gives a probability distribution for each observable. When we say there's "uncertainty" in position or momentum, we mean the spread (standard deviation) of the probability distribution of outcomes if we measured many times.</p>
+            <p><strong>The Key Insight:</strong> Quantum uncertainty is not due to randomness in measurement or instruments — it's due to the fundamental probabilistic nature of the system itself.</p>
+            <ul>
+                <li>In classical statistics, uncertainty reflects lack of knowledge (e.g., we don't know which die face will land).</li>
+                <li>In quantum mechanics, uncertainty reflects inherent indeterminacy — the outcome doesn't exist in a definite state until it is measured.</li>
+            </ul>
+        </div>
+
+        <div class="lab-guide">
+            <h2>Wave Interference</h2>
+            <div class="objective">
+                <h3>🧪 OBJECTIVE</h3>
+                <p>To explore how waves interact with each other and create interference patterns.</p>
+            </div>
+
+            <div class="materials">
+                <h3>✅ MATERIALS</h3>
+                <ul>
+                    <li>Internet-connected device</li>
+                    <li>PhET Wave Interference simulation</li>
+                </ul>
+                <a href="wave-interference_en.html" target="_blank" class="simulation-link">Open Simulation</a>
+            </div>
+
+            <h3>📝 PART 1A: Interface (Basic Wave Properties)</h3>
+            <ol>
+                <li>Open the simulation and observe the wave behavior.</li>
+                <li>Adjust the frequency and amplitude sliders.</li>
+                <li>Note how these changes affect the wave pattern.</li>
+                <li>Simulate interference patterns for water waves.</li>
+                <li>Simulate interference patterns for sound waves.</li>
+                <li>Sketch the interference pattern.</li>
+            </ol>
+
+            <h4>🔍 Observation Table A – Wave Properties</h4>
+            <table>
+                <tr>
+                    <th>Property</th>
+                    <th>Effect on Wave Pattern</th>
+                    <th>Notes</th>
+                </tr>
+                <tr>
+                    <td>Frequency</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Amplitude</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+            <button class="toggle-answer-btn" onclick="toggleAnswer(this, 'wave-table-a-ans')">Show Answer</button>
+            <div class="lab-answer" id="wave-table-a-ans">
+                <table>
+                    <tr><th>Property</th><th>Effect on Wave Pattern</th><th>Notes</th></tr>
+                    <tr><td>Frequency</td><td>More crests/troughs per unit length (waves get closer together)</td><td>Higher frequency = shorter wavelength</td></tr>
+                    <tr><td>Amplitude</td><td>Waves get taller (higher peaks and deeper troughs)</td><td>Amplitude affects energy, not wavelength</td></tr>
+                </table>
+            </div>
+
+            <h3>🧠 CONCLUSION QUESTIONS</h3>
+            <ol class="lab-question-list">
+                <li>
+                    <div class="lab-question"><span class="lab-question-text">How does changing the frequency affect the wave pattern?</span>
+                        <button class="toggle-answer-btn" onclick="toggleAnswer(this, 'wave-q1')">Show Answer</button></div>
+                    <div class="lab-answer" id="wave-q1">Increasing frequency results in more wave crests and troughs per unit length (shorter wavelength), making the pattern more closely spaced.</div>
+                </li>
+                <li>
+                    <div class="lab-question"><span class="lab-question-text">What happens to the wave when you increase the amplitude?</span>
+                        <button class="toggle-answer-btn" onclick="toggleAnswer(this, 'wave-q2')">Show Answer</button></div>
+                    <div class="lab-answer" id="wave-q2">The height of the wave increases, but the spacing between crests (wavelength) does not change.</div>
+                </li>
+                <li>
+                    <div class="lab-question"><span class="lab-question-text">What is the relationship between frequency and wavelength?</span>
+                        <button class="toggle-answer-btn" onclick="toggleAnswer(this, 'wave-q3')">Show Answer</button></div>
+                    <div class="lab-answer" id="wave-q3">They are inversely related: as frequency increases, wavelength decreases (and vice versa), for a constant wave speed.</div>
+                </li>
+            </ol>
+        </div>
+
+        <div class="lab-guide">
+            <h2>Double Slit Diffraction</h2>
+            <div class="objective">
+                <h3>🧪 OBJECTIVE</h3>
+                <p>To explore how light and particles like electrons behave when they pass through two slits, and observe the resulting interference patterns.</p>
+                <p><strong>RPK:</strong> Interference, Diffraction, fringes</p>
+            </div>
+
+            <div class="materials">
+                <h3>✅ MATERIALS</h3>
+                <ul>
+                    <li>PhET Quantum Wave Interference simulation</li>
+                </ul>
+                <button onclick="launchDoubleSlit()" class="simulation-link">Open Simulation</button>
+            </div>
+
+            <script>
+                function launchDoubleSlit() {
+                    // Create a link element to trigger the download/launch
+                    const link = document.createElement('a');
+                    link.href = 'quantum-wave-interference_en.jar';
+                    link.download = 'quantum-wave-interference_en.jar';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                }
+            </script>
+
+            <h3>📝 PART 1B: Interference with Waves (Photons)</h3>
+            <ol>
+                <li>Open the quantum wave simulation tool and select Photon as your particle source.</li>
+                <li>Set up Double Slits.</li>
+                <li>Fire photons from the laser onto the screen</li>
+                <li>Can you guess the pattern that would be formed</li>
+            </ol>
+
+            <h4>🔍 Observation Table A – Photon (Wave Behavior)</h4>
+            <table>
+                <tr>
+                    <th>Condition</th>
+                    <th>What pattern do you see on the screen?</th>
+                    <th>Sketch or describe the pattern</th>
+                </tr>
+                <tr>
+                    <td>Two slits, wave view ON</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+            <button class="toggle-answer-btn" onclick="toggleAnswer(this, 'ds-table-a-ans')">Show Answer</button>
+            <div class="lab-answer" id="ds-table-a-ans">
+                <table>
+                    <tr><th>Condition</th><th>What pattern do you see on the screen?</th><th>Sketch or describe the pattern</th></tr>
+                    <tr><td>Two slits, wave view ON</td><td>Alternating bright and dark bands (interference fringes)</td><td>Bright and dark stripes perpendicular to the slits</td></tr>
+                </table>
+            </div>
+
+            <h3>🧪 PART 2: Electrons One at a Time (Quantum Behavior)</h3>
+            <ol>
+                <li>Choose Electron as your particle source.</li>
+                <li>Select Double Slits again.</li>
+                <li>Turn OFF wave view (High Intensity) to focus on "Single particles" behavior.</li>
+                <li>Click "Auto Repeat".</li>
+                <li>Keep firing electrons and watch the screen build up.</li>
+            </ol>
+
+            <h4>🔍 Observation Table B – Electrons One at a Time</h4>
+            <table>
+                <tr>
+                    <th>Condition</th>
+                    <th>What does the full pattern look like after many electrons?</th>
+                </tr>
+                <tr>
+                    <td>Two slits, electrons sent one at a time</td>
+                    <td></td>
+                </tr>
+            </table>
+            <button class="toggle-answer-btn" onclick="toggleAnswer(this, 'ds-table-b-ans')">Show Answer</button>
+            <div class="lab-answer" id="ds-table-b-ans">
+                <table>
+                    <tr><th>Condition</th><th>What does the full pattern look like after many electrons?</th></tr>
+                    <tr><td>Two slits, electrons sent one at a time</td><td>Interference pattern (fringes) builds up over time, just like with light</td></tr>
+                </table>
+            </div>
+
+            <h3>🧠 CONCLUSION QUESTIONS</h3>
+            <ol class="lab-question-list">
+                <li>
+                    <div class="lab-question"><span class="lab-question-text">What type of pattern appears when two slits are open and photons or electrons are used?</span>
+                        <button class="toggle-answer-btn" onclick="toggleAnswer(this, 'ds-q1')">Show Answer</button></div>
+                    <div class="lab-answer" id="ds-q1">An interference pattern of alternating bright and dark fringes appears, showing wave-like behavior.</div>
+                </li>
+                <li>
+                    <div class="lab-question"><span class="lab-question-text">What surprising thing happens when you send electrons one at a time?</span>
+                        <button class="toggle-answer-btn" onclick="toggleAnswer(this, 'ds-q2')">Show Answer</button></div>
+                    <div class="lab-answer" id="ds-q2">Even when sent one at a time, electrons build up the same interference pattern over time, suggesting each electron interferes with itself.</div>
+                </li>
+                <li>
+                    <div class="lab-question"><span class="lab-question-text">What feature in this experiment shows that electrons behave like waves?</span>
+                        <button class="toggle-answer-btn" onclick="toggleAnswer(this, 'ds-q3')">Show Answer</button></div>
+                    <div class="lab-answer" id="ds-q3">The appearance of an interference pattern (fringes) even for single electrons shows wave-like behavior.</div>
+                </li>
+            </ol>
+        </div>
+
+        <div class="lab-guide">
+            <h2>Photoelectric Effect</h2>
+            <div class="objective">
+                <h3>🧪 OBJECTIVE</h3>
+                <p>To investigate how light can knock electrons out of a metal surface (the photoelectric effect), and explore how this supports the idea that light acts like particles (photons).</p>
+                <p><strong>RPK:</strong> Learners should know about light, intensity of light, the relationship frequency and wavelength of a wave.</p>
+            </div>
+
+            <div class="materials">
+                <h3>✅ MATERIALS</h3>
+                <ul>
+                    <li>PhET Photoelectric Effect simulation</li>
+                </ul>
+                <button onclick="launchPhotoelectric()" class="simulation-link">Open Simulation</button>
+            </div>
+
+            <script>
+                function launchPhotoelectric() {
+                    // Create a link element to trigger the download/launch
+                    const link = document.createElement('a');
+                    link.href = 'photoelectric_en.jar';
+                    link.download = 'photoelectric_en.jar';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                }
+            </script>
+
+            <h3>🚀 PART 1: Setup and Controls</h3>
+            <ol>
+                <li>Open the simulation.</li>
+                <li>You'll see:
+                    <ul>
+                        <li>A light source (wavelength and intensity sliders)</li>
+                        <li>A metal surface</li>
+                        <li>A vacuum chamber and ammeter to measure electron flow</li>
+                        <li>A detector</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <h3>🌟 PART 2: Explore Photon Energy (Wavelength)</h3>
+            <p>Keep intensity constant (25%). Change wavelength (color) of the light.</p>
+
+            <h4>🔍 Observation Table A – Wavelength vs. Electron Emission</h4>
+            <table>
+                <tr>
+                    <th>Color</th>
+                    <th>Wavelength (nm)</th>
+                    <th>Frequency</th>
+                    <th>General Observation</th>
+                </tr>
+                <tr>
+                    <td>Red</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Orange</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Yellow</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Green</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Blue</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Indigo</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Violet</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+            <button class="toggle-answer-btn" onclick="toggleAnswer(this, 'pe-table-a-ans')">Show Answer</button>
+            <div class="lab-answer" id="pe-table-a-ans">
+                <table>
+                    <tr><th>Color</th><th>Wavelength (nm)</th><th>Frequency</th><th>General Observation</th></tr>
+                    <tr><td>Red</td><td>~700</td><td>Low</td><td>No electrons ejected</td></tr>
+                    <tr><td>Orange</td><td>~620</td><td>Low-Med</td><td>No electrons ejected</td></tr>
+                    <tr><td>Yellow</td><td>~580</td><td>Medium</td><td>No electrons ejected</td></tr>
+                    <tr><td>Green</td><td>~530</td><td>Medium-High</td><td>Electrons start to be ejected</td></tr>
+                    <tr><td>Blue</td><td>~470</td><td>High</td><td>Electrons ejected</td></tr>
+                    <tr><td>Indigo</td><td>~425</td><td>Very High</td><td>Electrons ejected</td></tr>
+                    <tr><td>Violet</td><td>~400</td><td>Very High</td><td>Electrons ejected</td></tr>
+                </table>
+            </div>
+
+            <h3>🔦 PART 3: Explore Intensity (Brightness)</h3>
+            <p>Pick a wavelength that does eject electrons (like violet or UV).</p>
+            <p>Change only intensity of light (keep wavelength the same).</p>
+
+            <h4>🔍 Observation Table B – Intensity vs. Electron Ejection</h4>
+            <table>
+                <tr>
+                    <th>Intensity Level</th>
+                    <th>How does the number of electrons change?</th>
+                </tr>
+                <tr>
+                    <td>Level 10%</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Level 30%</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Level 50%</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Level 70%</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Level 90%</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Level 100%</td>
+                    <td></td>
+                </tr>
+            </table>
+            <button class="toggle-answer-btn" onclick="toggleAnswer(this, 'pe-table-b-ans')">Show Answer</button>
+            <div class="lab-answer" id="pe-table-b-ans">
+                <table>
+                    <tr><th>Intensity Level</th><th>How does the number of electrons change?</th></tr>
+                    <tr><td>Level 10%</td><td>Few electrons ejected</td></tr>
+                    <tr><td>Level 30%</td><td>More electrons ejected</td></tr>
+                    <tr><td>Level 50%</td><td>Even more electrons ejected</td></tr>
+                    <tr><td>Level 70%</td><td>Number increases further</td></tr>
+                    <tr><td>Level 90%</td><td>Almost maximum electrons ejected</td></tr>
+                    <tr><td>Level 100%</td><td>Maximum electrons ejected</td></tr>
+                </table>
+            </div>
+
+            <h3>🧠 CONCLUSION QUESTIONS</h3>
+            <ol class="lab-question-list">
+                <li>
+                    <div class="lab-question"><span class="lab-question-text">Does changing the intensity of low-energy light (e.g., red) cause photoelectrons to be ejected?</span>
+                        <button class="toggle-answer-btn" onclick="toggleAnswer(this, 'pe-q1')">Show Answer</button></div>
+                    <div class="lab-answer" id="pe-q1">No, increasing intensity of low-energy (low-frequency) light does not cause photoelectrons to be ejected if the photon energy is below the threshold.</div>
+                </li>
+                <li>
+                    <div class="lab-question"><span class="lab-question-text">Does increasing the frequency (or using shorter wavelengths) cause photoelectron ejection for a given material e.g. Na?</span>
+                        <button class="toggle-answer-btn" onclick="toggleAnswer(this, 'pe-q2')">Show Answer</button></div>
+                    <div class="lab-answer" id="pe-q2">Yes, increasing the frequency (shorter wavelength) above the threshold causes photoelectron ejection for that material.</div>
+                </li>
+                <li>
+                    <div class="lab-question"><span class="lab-question-text">How does the number of photons (intensity) affect the number of photoelectrons?</span>
+                        <button class="toggle-answer-btn" onclick="toggleAnswer(this, 'pe-q3')">Show Answer</button></div>
+                    <div class="lab-answer" id="pe-q3">Increasing intensity (number of photons) increases the number of photoelectrons ejected, but only if the photon energy is above the threshold.</div>
+                </li>
+                <li>
+                    <div class="lab-question"><span class="lab-question-text">What happens if each photon's energy is below the threshold?</span>
+                        <button class="toggle-answer-btn" onclick="toggleAnswer(this, 'pe-q4')">Show Answer</button></div>
+                    <div class="lab-answer" id="pe-q4">No photoelectrons are ejected, regardless of the intensity of the light.</div>
+                </li>
+                <li>
+                    <div class="lab-question"><span class="lab-question-text">Based on what you observed, why must light behave like particles (photons) in this experiment?</span>
+                        <button class="toggle-answer-btn" onclick="toggleAnswer(this, 'pe-q5')">Show Answer</button></div>
+                    <div class="lab-answer" id="pe-q5">Because only photons with enough energy (above threshold frequency) can eject electrons, showing that energy is delivered in discrete packets (quanta), not continuously as a wave.</div>
+                </li>
+            </ol>
+
+            <h3>🔑 Key Concept: Why This Proves Light Is a Particle</h3>
+            <p>The photoelectric effect doesn't work like a wave:</p>
+            <ul>
+                <li>Increasing brightness (intensity) doesn't help if the frequency is too low.</li>
+                <li>Only high-frequency photons (each with enough energy) can eject electrons.</li>
+                <li>This means energy is delivered in chunks (quanta) — proving light is made of particles!</li>
+            </ul>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>Department of Physics - Faculty of Physical and Computational Sciences</p>
+            <p>Kwame Nkrumah University of Science and Technology</p>
+        </div>
+    </footer>
+</body>
+</html>
