@@ -720,90 +720,13 @@
                 <a href="wave-interference_en.html" target="_blank" class="simulation-link">Open Simulation</a>
             </div>
 
-            <h3>📝 PART 1A: Interface (Basic Wave Properties)</h3>
+            <h3>PART 1A: Interface</h3>
             <ol>
-                <li>Open the simulation and observe the wave behavior.</li>
-                <li>Adjust the frequency and amplitude sliders.</li>
-                <li>Note how these changes affect the wave pattern.</li>
+                <li>Open mechanical wave simulator.</li>
                 <li>Simulate interference patterns for water waves.</li>
                 <li>Simulate interference patterns for sound waves.</li>
                 <li>Sketch the interference pattern.</li>
             </ol>
-
-            <h4>🔍 Observation Table A – Wave Properties</h4>
-            <table>
-                <tr>
-                    <th>Property</th>
-                    <th>Effect on Wave Pattern</th>
-                    <th>Notes</th>
-                </tr>
-                <tr>
-                    <td>Frequency</td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Amplitude</td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </table>
-            <button class="toggle-answer-btn" onclick="toggleAnswer(this, 'wave-table-a-ans')">Show Answer</button>
-            <div class="lab-answer" id="wave-table-a-ans">
-                <table>
-                    <tr><th>Property</th><th>Effect on Wave Pattern</th><th>Notes</th></tr>
-                    <tr><td>Frequency</td><td>More crests/troughs per unit length (waves get closer together)</td><td>Higher frequency = shorter wavelength</td></tr>
-                    <tr><td>Amplitude</td><td>Waves get taller (higher peaks and deeper troughs)</td><td>Amplitude affects energy, not wavelength</td></tr>
-                </table>
-            </div>
-
-            <h3>🧠 CONCLUSION QUESTIONS</h3>
-            <ol class="lab-question-list">
-                <li>
-                    <div class="lab-question"><span class="lab-question-text">How does changing the frequency affect the wave pattern?</span>
-                        <button class="toggle-answer-btn" onclick="toggleAnswer(this, 'wave-q1')">Show Answer</button></div>
-                    <div class="lab-answer" id="wave-q1">Increasing frequency results in more wave crests and troughs per unit length (shorter wavelength), making the pattern more closely spaced.</div>
-                </li>
-                <li>
-                    <div class="lab-question"><span class="lab-question-text">What happens to the wave when you increase the amplitude?</span>
-                        <button class="toggle-answer-btn" onclick="toggleAnswer(this, 'wave-q2')">Show Answer</button></div>
-                    <div class="lab-answer" id="wave-q2">The height of the wave increases, but the spacing between crests (wavelength) does not change.</div>
-                </li>
-                <li>
-                    <div class="lab-question"><span class="lab-question-text">What is the relationship between frequency and wavelength?</span>
-                        <button class="toggle-answer-btn" onclick="toggleAnswer(this, 'wave-q3')">Show Answer</button></div>
-                    <div class="lab-answer" id="wave-q3">They are inversely related: as frequency increases, wavelength decreases (and vice versa), for a constant wave speed.</div>
-                </li>
-            </ol>
-        </div>
-
-        <div class="lab-guide">
-            <h2>Double Slit Diffraction</h2>
-            <div class="objective">
-                <h3>🧪 OBJECTIVE</h3>
-                <p>To explore how light and particles like electrons behave when they pass through two slits, and observe the resulting interference patterns.</p>
-                <p><strong>RPK:</strong> Interference, Diffraction, fringes</p>
-            </div>
-
-            <div class="materials">
-                <h3>✅ MATERIALS</h3>
-                <ul>
-                    <li>PhET Quantum Wave Interference simulation</li>
-                </ul>
-                <button onclick="launchDoubleSlit()" class="simulation-link">Open Simulation</button>
-            </div>
-
-            <script>
-                function launchDoubleSlit() {
-                    // Create a link element to trigger the download/launch
-                    const link = document.createElement('a');
-                    link.href = 'quantum-wave-interference_en.jar';
-                    link.download = 'quantum-wave-interference_en.jar';
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
-                }
-            </script>
 
             <h3>📝 PART 1B: Interference with Waves (Photons)</h3>
             <ol>
@@ -838,8 +761,121 @@
             <ol>
                 <li>Choose Electron as your particle source.</li>
                 <li>Select Double Slits again.</li>
-                <li>Turn OFF wave view (High Intensity) to focus on "Single particles" behavior.</li>
-                <li>Click "Auto Repeat".</li>
+                <li>Turn OFF wave view to focus on particle behavior.</li>
+                <li>Click "Send in one at a time".</li>
+                <li>Keep firing electrons and watch the screen build up.</li>
+            </ol>
+
+            <h4>🔍 Observation Table B – Electrons One at a Time</h4>
+            <table>
+                <tr>
+                    <th>Condition</th>
+                    <th>What does the full pattern look like after many electrons?</th>
+                </tr>
+                <tr>
+                    <td>Two slits, electrons sent one at a time</td>
+                    <td></td>
+                </tr>
+            </table>
+            <button class="toggle-answer-btn" onclick="toggleAnswer(this, 'ds-table-b-ans')">Show Answer</button>
+            <div class="lab-answer" id="ds-table-b-ans">
+                <table>
+                    <tr><th>Condition</th><th>What does the full pattern look like after many electrons?</th></tr>
+                    <tr><td>Two slits, electrons sent one at a time</td><td>Interference pattern (fringes) builds up over time, just like with light</td></tr>
+                </table>
+            </div>
+
+            <h3>🧠 CONCLUSION QUESTIONS</h3>
+            <ol class="lab-question-list">
+                <li>
+                    <div class="lab-question"><span class="lab-question-text">What type of pattern appears when two slits are open and photons or electrons are used?</span>
+                        <button class="toggle-answer-btn" onclick="toggleAnswer(this, 'ds-q1')">Show Answer</button></div>
+                    <div class="lab-answer" id="ds-q1">An interference pattern of alternating bright and dark fringes appears, showing wave-like behavior.</div>
+                </li>
+                <li>
+                    <div class="lab-question"><span class="lab-question-text">What surprising thing happens when you send electrons one at a time?</span>
+                        <button class="toggle-answer-btn" onclick="toggleAnswer(this, 'ds-q2')">Show Answer</button></div>
+                    <div class="lab-answer" id="ds-q2">Even when sent one at a time, electrons build up the same interference pattern over time, suggesting each electron interferes with itself.</div>
+                </li>
+                <li>
+                    <div class="lab-question"><span class="lab-question-text">What feature in this experiment shows that electrons behave like waves?</span>
+                        <button class="toggle-answer-btn" onclick="toggleAnswer(this, 'ds-q3')">Show Answer</button></div>
+                    <div class="lab-answer" id="ds-q3">The appearance of an interference pattern (fringes) even for single electrons shows wave-like behavior.</div>
+                </li>
+            </ol>
+        </div>
+
+        <div class="lab-guide">
+            <h2>Double Slit Diffraction</h2>
+            <div class="objective">
+                <h3>🧪 OBJECTIVE</h3>
+                <p>To explore how light and particles like electrons behave when they pass through two slits, and observe the resulting interference patterns.</p>
+                <p><strong>RPK:</strong> Interference, Diffraction, fringes</p>
+            </div>
+
+            <div class="materials">
+                <h3>✅ MATERIALS</h3>
+                <ul>
+                    <li>PhET Quantum Wave Interference simulation</li>
+                </ul>
+                <button onclick="launchDoubleSlit()" class="simulation-link">Open Simulation</button>
+            </div>
+
+            <script>
+                function launchDoubleSlit() {
+                    // Create a link element to trigger the download/launch
+                    const link = document.createElement('a');
+                    link.href = 'quantum-wave-interference_en.jar';
+                    link.download = 'quantum-wave-interference_en.jar';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                }
+            </script>
+
+            <h3>📝 PART 1A: Interface</h3>
+            <ol>
+                <li>Open mechanical wave simulator.</li>
+                <li>Simulate interference patterns for water waves.</li>
+                <li>Simulate interference patterns for sound waves.</li>
+                <li>Sketch the interference pattern.</li>
+            </ol>
+
+            <h3>📝 PART 1B: Interference with Waves (Photons)</h3>
+            <ol>
+                <li>Open the quantum wave simulation tool and select Photon as your particle source.</li>
+                <li>Set up Double Slits.</li>
+                <li>Fire photons from the laser onto the screen</li>
+                <li>Can you guess the pattern that would be formed</li>
+            </ol>
+
+            <h4>🔍 Observation Table A – Photon (Wave Behavior)</h4>
+            <table>
+                <tr>
+                    <th>Condition</th>
+                    <th>What pattern do you see on the screen?</th>
+                    <th>Sketch or describe the pattern</th>
+                </tr>
+                <tr>
+                    <td>Two slits, wave view ON</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+            <button class="toggle-answer-btn" onclick="toggleAnswer(this, 'ds-table-a-ans')">Show Answer</button>
+            <div class="lab-answer" id="ds-table-a-ans">
+                <table>
+                    <tr><th>Condition</th><th>What pattern do you see on the screen?</th><th>Sketch or describe the pattern</th></tr>
+                    <tr><td>Two slits, wave view ON</td><td>Alternating bright and dark bands (interference fringes)</td><td>Bright and dark stripes perpendicular to the slits</td></tr>
+                </table>
+            </div>
+
+            <h3>🧪 PART 2: Electrons One at a Time (Quantum Behavior)</h3>
+            <ol>
+                <li>Choose Electron as your particle source.</li>
+                <li>Select Double Slits again.</li>
+                <li>Turn OFF wave view to focus on particle behavior.</li>
+                <li>Click "Send in one at a time".</li>
                 <li>Keep firing electrons and watch the screen build up.</li>
             </ol>
 
@@ -900,7 +936,6 @@
 
             <script>
                 function launchPhotoelectric() {
-                    // Create a link element to trigger the download/launch
                     const link = document.createElement('a');
                     link.href = 'photoelectric_en.jar';
                     link.download = 'photoelectric_en.jar';
@@ -923,7 +958,7 @@
                 </li>
             </ol>
 
-            <h3>🌟 PART 2: Explore Photon Energy (Wavelength)</h3>
+            <h3>PART 2: Explore Photon Energy (Wavelength)</h3>
             <p>Keep intensity constant (25%). Change wavelength (color) of the light.</p>
 
             <h4>🔍 Observation Table A – Wavelength vs. Electron Emission</h4>
@@ -977,19 +1012,8 @@
                     <td></td>
                 </tr>
             </table>
-            <button class="toggle-answer-btn" onclick="toggleAnswer(this, 'pe-table-a-ans')">Show Answer</button>
-            <div class="lab-answer" id="pe-table-a-ans">
-                <table>
-                    <tr><th>Color</th><th>Wavelength (nm)</th><th>Frequency</th><th>General Observation</th></tr>
-                    <tr><td>Red</td><td>~700</td><td>Low</td><td>No electrons ejected</td></tr>
-                    <tr><td>Orange</td><td>~620</td><td>Low-Med</td><td>No electrons ejected</td></tr>
-                    <tr><td>Yellow</td><td>~580</td><td>Medium</td><td>No electrons ejected</td></tr>
-                    <tr><td>Green</td><td>~530</td><td>Medium-High</td><td>Electrons start to be ejected</td></tr>
-                    <tr><td>Blue</td><td>~470</td><td>High</td><td>Electrons ejected</td></tr>
-                    <tr><td>Indigo</td><td>~425</td><td>Very High</td><td>Electrons ejected</td></tr>
-                    <tr><td>Violet</td><td>~400</td><td>Very High</td><td>Electrons ejected</td></tr>
-                </table>
-            </div>
+            <p>Use the ejector graphic or ammeter to tell if electrons are being ejected.</p>
+            <p>💡 Hint: Try moving from shorter to longer wavelengths (violet → red).</p>
 
             <h3>🔦 PART 3: Explore Intensity (Brightness)</h3>
             <p>Pick a wavelength that does eject electrons (like violet or UV).</p>
@@ -1026,18 +1050,7 @@
                     <td></td>
                 </tr>
             </table>
-            <button class="toggle-answer-btn" onclick="toggleAnswer(this, 'pe-table-b-ans')">Show Answer</button>
-            <div class="lab-answer" id="pe-table-b-ans">
-                <table>
-                    <tr><th>Intensity Level</th><th>How does the number of electrons change?</th></tr>
-                    <tr><td>Level 10%</td><td>Few electrons ejected</td></tr>
-                    <tr><td>Level 30%</td><td>More electrons ejected</td></tr>
-                    <tr><td>Level 50%</td><td>Even more electrons ejected</td></tr>
-                    <tr><td>Level 70%</td><td>Number increases further</td></tr>
-                    <tr><td>Level 90%</td><td>Almost maximum electrons ejected</td></tr>
-                    <tr><td>Level 100%</td><td>Maximum electrons ejected</td></tr>
-                </table>
-            </div>
+            <p>Watch the number of electrons and the current in the circuit.</p>
 
             <h3>🧠 CONCLUSION QUESTIONS</h3>
             <ol class="lab-question-list">
