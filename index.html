@@ -95,6 +95,10 @@
             box-sizing: border-box;
         }
 
+        textarea {
+            font-size: inherit;
+        }
+
         body {
             font-family: 'Segoe UI', Arial, sans-serif;
             line-height: 1.6;
@@ -562,16 +566,17 @@
 </head>
 <body>
     <div class="theme-switcher">
+        <button id="decrease-font" title="Decrease text size" style="font-size:1.3em;width:32px;height:32px;border-radius:50%;border:none;background:var(--card-bg);color:var(--accent-color);cursor:pointer;box-shadow:0 0 8px var(--glow-color);margin-right:6px;transition:all 0.2s;">-</button>
         <div class="theme-option theme-quantum-dark active" onclick="setTheme('quantum-dark')" title="Quantum Dark"></div>
         <div class="theme-option theme-quantum-light" onclick="setTheme('quantum-light')" title="Quantum Light"></div>
         <div class="theme-option theme-quantum-matrix" onclick="setTheme('quantum-matrix')" title="Quantum Matrix"></div>
         <div class="theme-option theme-quantum-neon" onclick="setTheme('quantum-neon')" title="Quantum Neon"></div>
+        <button id="increase-font" title="Increase text size" style="font-size:1.3em;width:32px;height:32px;border-radius:50%;border:none;background:var(--card-bg);color:var(--accent-color);cursor:pointer;box-shadow:0 0 8px var(--glow-color);margin-left:6px;transition:all 0.2s;">+</button>
     </div>
 
     <script>
         function setTheme(theme) {
             document.documentElement.setAttribute('data-theme', theme);
-            
             // Update active state of theme options
             document.querySelectorAll('.theme-option').forEach(option => {
                 option.classList.remove('active');
@@ -579,15 +584,33 @@
                     option.classList.add('active');
                 }
             });
-
             // Store the selected theme in localStorage
             localStorage.setItem('selected-theme', theme);
         }
 
-        // Load saved theme or default to quantum-dark
+        // Font size scaling logic
+        const MIN_FONT_SIZE = 12;
+        const MAX_FONT_SIZE = 28;
+        const DEFAULT_FONT_SIZE = 16;
+        function setFontSize(size) {
+            size = Math.max(MIN_FONT_SIZE, Math.min(MAX_FONT_SIZE, size));
+            document.body.style.fontSize = size + 'px';
+            localStorage.setItem('font-size', size);
+        }
+        function getFontSize() {
+            return parseInt(localStorage.getItem('font-size')) || DEFAULT_FONT_SIZE;
+        }
         document.addEventListener('DOMContentLoaded', () => {
             const savedTheme = localStorage.getItem('selected-theme') || 'quantum-dark';
             setTheme(savedTheme);
+            // Font size
+            setFontSize(getFontSize());
+            document.getElementById('increase-font').onclick = function() {
+                setFontSize(getFontSize() + 2);
+            };
+            document.getElementById('decrease-font').onclick = function() {
+                setFontSize(getFontSize() - 2);
+            };
         });
 
         function toggleAnswer(btn, id) {
@@ -695,6 +718,98 @@
                     <div class="lab-answer" id="uncertainty-h1">The histogram forms a bell-shaped curve, peaking at 7. This shows the most probable outcome is 7, and the distribution is not uniform.</div>
                 </li>
             </ol>
+            <h3>📋 OBSERVATION TABLE E</h3>
+            <p>Construct a frequency table for possible outcomes in Observation Table D:</p>
+            <table>
+                <tr>
+                    <th>Sums (x)</th>
+                    <th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th><th>11</th><th>12</th><th>Total</th>
+                </tr>
+                <tr>
+                    <th>Frequency (f)</th>
+                    <td>0</td><td>0</td><td>1</td><td>4</td><td>8</td><td>10</td><td>8</td><td>4</td><td>1</td><td>0</td><td>0</td><td>36</td>
+                </tr>
+                <tr>
+                    <th>fx</th>
+                    <td>0</td><td>0</td><td>4</td><td>20</td><td>48</td><td>70</td><td>64</td><td>36</td><td>10</td><td>0</td><td>0</td><td>254</td>
+                </tr>
+                <tr>
+                    <th>x - x&#773;</th>
+                    <td>0</td><td>0</td><td>-3</td><td>-2</td><td>-1</td><td>0</td><td>1</td><td>1.94</td><td>2.94</td><td>0</td><td>0</td><td></td>
+                </tr>
+                <tr>
+                    <th>(x - x&#773;)²</th>
+                    <td></td><td></td><td>9.36</td><td>4.24</td><td>1.12</td><td>0.004</td><td>0.88</td><td>3.76</td><td>8.64</td><td></td><td></td><td></td>
+                </tr>
+                <tr>
+                    <th>f(x - x&#773;)²</th>
+                    <td></td><td></td><td>9.36</td><td>16.96</td><td>8.96</td><td>0.28</td><td>7.04</td><td></td><td></td><td></td><td></td><td></td>
+                </tr>
+            </table>
+            <div class="lab-question"><span class="lab-question-text">Estimate the standard deviation for the distribution.</span></div>
+            <textarea style="width:100%;min-height:3em;margin:1em 0;" placeholder="Write your answer here..."></textarea>
+
+            <h3>📋 OBSERVATION TABLE F</h3>
+            <p><strong>DICE A / DICE B</strong></p>
+            <pre style="background:var(--card-bg);padding:1em;border-radius:8px;overflow-x:auto;">
+    1   1   2   5   6   6
+    1   2   2   3   6   7   7
+    1   2   2   3   6   7   7
+    2   3   3   4   7   8   8
+    5   6   6   7   10  11  11
+    6   7   7   8   11  12  12
+    6   7   7   8   11  12  12
+            </pre>
+            <div class="lab-question"><span class="lab-question-text">Construct a frequency table for Observation Table F:</span></div>
+            <table>
+                <tr>
+                    <th>Sums (x)</th>
+                    <th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th><th>11</th><th>12</th><th>Total</th>
+                </tr>
+                <tr>
+                    <th>Frequency (f)</th>
+                    <td>4</td><td>4</td><td>1</td><td>0</td><td>4</td><td>10</td><td>4</td><td>0</td><td>1</td><td>4</td><td>4</td><td>36</td>
+                </tr>
+                <tr>
+                    <th>fx</th>
+                    <td>8</td><td>12</td><td>4</td><td>0</td><td>24</td><td>70</td><td>32</td><td>0</td><td>10</td><td>44</td><td>36</td><td>240</td>
+                </tr>
+                <tr>
+                    <th>x - x&#773;</th>
+                    <td>-5</td><td>-4</td><td>-3</td><td>-2</td><td>-1</td><td>0</td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td></td>
+                </tr>
+                <tr>
+                    <th>(x - x&#773;)²</th>
+                    <td>25</td><td>16</td><td>9</td><td>4</td><td>1</td><td>0</td><td>1</td><td>4</td><td>9</td><td>16</td><td>25</td><td>110</td>
+                </tr>
+                <tr>
+                    <th>f(x - x&#773;)²</th>
+                    <td>100</td><td>64</td><td>9</td><td>0</td><td>4</td><td>0</td><td>4</td><td>0</td><td>9</td><td>64</td><td>100</td><td>354</td>
+                </tr>
+            </table>
+            <div class="lab-question"><span class="lab-question-text">Estimate the standard deviation for the distribution.</span></div>
+            <textarea style="width:100%;min-height:3em;margin:1em 0;" placeholder="Write your answer here..."></textarea>
+
+            <div class="lab-question"><span class="lab-question-text">Construct a Histogram for both Observation D and Observation E on different graph sheets.</span></div>
+            <textarea style="width:100%;min-height:3em;margin:1em 0;" placeholder="Write your answer here..."></textarea>
+
+            <div class="lab-question"><span class="lab-question-text">Discuss the Histograms from Observation Tables C, D and E.</span></div>
+            <textarea style="width:100%;min-height:3em;margin:1em 0;" placeholder="Write your answer here..."></textarea>
+
+            <div class="lab-question"><span class="lab-question-text">Observe and discuss the averages and standard deviation of all the histograms.</span></div>
+            <textarea style="width:100%;min-height:3em;margin:1em 0;" placeholder="Write your answer here..."></textarea>
+
+            <div class="lab-question"><span class="lab-question-text">Discuss with the students what the two sets of dice represent in quantum mechanics.</span></div>
+            <textarea style="width:100%;min-height:3em;margin:1em 0;" placeholder="Write your answer here..."></textarea>
+
+            <div class="lab-question"><span class="lab-question-text">Students guess what the rolling of the dice represent.</span></div>
+            <textarea style="width:100%;min-height:3em;margin:1em 0;" placeholder="Write your answer here..."></textarea>
+
+            <div class="lab-question"><span class="lab-question-text">Students state some advantages and disadvantages of using model or set up.</span></div>
+            <textarea style="width:100%;min-height:3em;margin:1em 0;" placeholder="Write your answer here..."></textarea>
+
+            <div class="lab-question"><span class="lab-question-text">Discuss the use of laser for the same procedure and its implications.</span></div>
+            <textarea style="width:100%;min-height:3em;margin:1em 0;" placeholder="Write your answer here..."></textarea>
             <h3>📝 FOOTNOTE: Quantum Uncertainty</h3>
             <p>In quantum physics: Particles like electrons don't have a single definite position or momentum before measurement. Instead, they're described by a wavefunction, which gives a probability distribution for each observable. When we say there's "uncertainty" in position or momentum, we mean the spread (standard deviation) of the probability distribution of outcomes if we measured many times.</p>
             <p><strong>The Key Insight:</strong> Quantum uncertainty is not due to randomness in measurement or instruments — it's due to the fundamental probabilistic nature of the system itself.</p>
@@ -1120,7 +1235,83 @@
         <div class="footer-content">
             <p>Department of Physics - Faculty of Physical and Computational Sciences</p>
             <p>Kwame Nkrumah University of Science and Technology</p>
+            <div class="contact-section">
+                <h3 style="margin:1.2em 0 0.5em 0;font-size:1.2em;color:var(--accent-color);letter-spacing:1px;">For More Information Contact:</h3>
+                <div class="contact-grid">
+                    <div class="contact-person">
+                        <span class="contact-name">Dorcas Attuabea Addo</span><br>
+                        <a class="contact-link" href="https://wa.me/233242334503" target="_blank" title="WhatsApp Dorcas"><span style="font-weight:bold;">WhatsApp:</span> +233 242 334 503</a>
+                    </div>
+                    <div class="contact-person">
+                        <span class="contact-name">Henry Elorm Quarshie</span><br>
+                        <a class="contact-link" href="https://wa.me/233506977836" target="_blank" title="WhatsApp Henry"><span style="font-weight:bold;">WhatsApp:</span> +233 506 977 836</a>
+                    </div>
+                    <div class="contact-person">
+                        <a class="contact-link" href="mailto:mcp.physics@knust.edu.gh"><span style="font-weight:bold;">Email:</span> mcp.physics@knust.edu.gh</a><br>
+                        <a class="contact-link" href="mailto:mathcphy@gmail.com"><span style="font-weight:bold;">Email:</span> mathcphy@gmail.com</a>
+                    </div>
+                    <div class="contact-person">
+                        <a class="contact-link" href="https://physics.knust.edu.gh/mcp/GQuantum-Education" target="_blank"><span style="font-weight:bold;">GQuantum Website</span></a>
+                    </div>
+                </div>
+            </div>
         </div>
     </footer>
+    <style>
+        .contact-section {
+            margin-top: 2em;
+            width: 100%;
+        }
+        .contact-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2.5em 2em;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+        .contact-person {
+            background: rgba(255,255,255,0.07);
+            border-radius: 10px;
+            padding: 1em 1.5em;
+            min-width: 220px;
+            box-shadow: 0 2px 8px 0 var(--glow-color);
+            color: var(--text-color);
+            font-size: 1.08em;
+            text-align: left;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .contact-person:hover {
+            transform: translateY(-4px) scale(1.03);
+            box-shadow: 0 6px 18px 0 var(--accent-color);
+        }
+        .contact-name {
+            font-weight: 600;
+            color: var(--secondary-color);
+            font-size: 1.1em;
+        }
+        .contact-link {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+            word-break: break-all;
+        }
+        .contact-link:hover {
+            color: var(--primary-color);
+            text-decoration: underline;
+        }
+        @media (max-width: 700px) {
+            .contact-grid {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 1em;
+            }
+            .contact-person {
+                min-width: 0;
+                width: 100%;
+            }
+        }
+    </style>
 </body>
 </html>
