@@ -562,6 +562,41 @@
         .lab-question-list li {
             margin-bottom: 1.2em;
         }
+        .dice-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1em 0;
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: 0 0 10px var(--glow-color);
+        }
+        .dice-table th, .dice-table td {
+            border: 1px solid var(--secondary-color);
+            padding: 0.5em 1em;
+            text-align: center;
+            color: var(--table-text);
+            font-size: 1em;
+        }
+        .dice-table th {
+            background: var(--primary-color);
+            color: #fff;
+            font-weight: 600;
+        }
+        .dice-table tr:nth-child(even) td {
+            background: rgba(124, 77, 255, 0.08);
+        }
+        .dice-table .vertical-header {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            background: var(--primary-color);
+            color: #fff;
+            font-weight: 700;
+            font-size: 1.1em;
+            letter-spacing: 2px;
+            text-align: center;
+            border-right: 2px solid var(--secondary-color);
+        }
     </style>
 </head>
 <body>
@@ -751,15 +786,46 @@
 
             <h3>📋 OBSERVATION TABLE F</h3>
             <p><strong>DICE A / DICE B</strong></p>
-            <pre style="background:var(--card-bg);padding:1em;border-radius:8px;overflow-x:auto;">
-    1   1   2   5   6   6
-    1   2   2   3   6   7   7
-    1   2   2   3   6   7   7
-    2   3   3   4   7   8   8
-    5   6   6   7   10  11  11
-    6   7   7   8   11  12  12
-    6   7   7   8   11  12  12
-            </pre>
+            <table class="dice-table">
+                <tr>
+                    <th rowspan="10" class="vertical-header">DICE B</th>
+                    <th colspan="7" style="text-align:center;">DICE A</th>
+                </tr>
+                <tr>
+                    <th></th><th>1</th><th>1</th><th>2</th><th>5</th><th>6</th><th>6</th>
+                </tr>
+                <tr>
+                    <th>1</th><td>2</td><td>2</td><td>3</td><td>6</td><td>7</td><td>7</td>
+                </tr>
+                <tr>
+                    <th>1</th><td>2</td><td>2</td><td>3</td><td>6</td><td>7</td><td>7</td>
+                </tr>
+                <tr>
+                    <th>2</th><td>3</td><td>3</td><td>4</td><td>7</td><td>8</td><td>8</td>
+                </tr>
+                <tr>
+                    <th>5</th><td>6</td><td>6</td><td>7</td><td>10</td><td>11</td><td>11</td>
+                </tr>
+                <tr>
+                    <th>6</th><td>7</td><td>7</td><td>8</td><td>11</td><td>12</td><td>12</td>
+                </tr>
+                <tr>
+                    <th>6</th><td>7</td><td>7</td><td>8</td><td>11</td><td>12</td><td>12</td>
+                </tr>
+            </table>
+            <style>
+            .dice-table .vertical-header {
+                writing-mode: vertical-rl;
+                text-orientation: mixed;
+                background: var(--primary-color);
+                color: #fff;
+                font-weight: 700;
+                font-size: 1.1em;
+                letter-spacing: 2px;
+                text-align: center;
+                border-right: 2px solid var(--secondary-color);
+            }
+            </style>
             <div class="lab-question"><span class="lab-question-text">Construct a frequency table for Observation Table F:</span></div>
             <table>
                 <tr>
