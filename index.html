@@ -1,1387 +1,800 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quantum Physics Lab Guides - KNUST Department of Physics</title>
-    <meta name="description" content="Quantum physics lab guides for KNUST Department of Physics. Interactive simulations, experiments, and course materials.">
-    <meta property="og:title" content="Quantum Physics Lab Guides - KNUST">
-    <meta property="og:description" content="Comprehensive quantum physics lab guides with interactive simulations and experiments.">
-    <meta property="og:type" content="website">
-    <link rel="icon" type="image/png" href="COS.png">
-    <style>
-        :root {
-            --primary-color: #1a237e;
-            --secondary-color: #7c4dff;
-            --accent-color: #00b0ff;
-            --background-color: #0a192f;
-            --text-color: #e6f1ff;
-            --text-color-secondary: #e6f1ff;
-            --card-bg: rgba(15, 32, 59, 0.95);
-            --border-radius: 12px;
-            --glow-color: rgba(124, 77, 255, 0.3);
-            --table-text: #ffffff;
-            --table-row-hover: rgba(124, 77, 255, 0.3);
-        }
-
-        :root[data-theme="quantum-dark"] {
-            --primary-color: #1a237e;
-            --secondary-color: #7c4dff;
-            --accent-color: #00b0ff;
-            --background-color: #0a192f;
-            --text-color: #ffffff;
-            --text-color-secondary: #e6f1ff;
-            --card-bg: rgba(15, 32, 59, 0.95);
-            --glow-color: rgba(124, 77, 255, 0.3);
-            --table-text: #ffffff;
-            --table-row-hover: rgba(124, 77, 255, 0.3);
-        }
-
-        :root[data-theme="quantum-light"] {
-            --primary-color: #3f51b5;
-            --secondary-color: #7986cb;
-            --accent-color: #2196f3;
-            --background-color: #f0f4ff;
-            --text-color: #1a237e;
-            --text-color-secondary: #2c3e50;
-            --card-bg: rgba(255, 255, 255, 0.95);
-            --glow-color: rgba(63, 81, 181, 0.3);
-            --table-text: #1a237e;
-            --table-row-hover: rgba(63, 81, 181, 0.15);
-        }
-
-        :root[data-theme="quantum-matrix"] {
-            --primary-color: #00ff00;
-            --secondary-color: #32cd32;
-            --accent-color: #98fb98;
-            --background-color: #000000;
-            --text-color: #00ff00;
-            --text-color-secondary: #98fb98;
-            --card-bg: rgba(0, 20, 0, 0.95);
-            --glow-color: rgba(0, 255, 0, 0.3);
-            --table-text: #00ff00;
-            --table-row-hover: rgba(0, 255, 0, 0.2);
-        }
-
-        :root[data-theme="quantum-neon"] {
-            --primary-color: #ff1e6c;
-            --secondary-color: #00fff0;
-            --accent-color: #8a2be2;
-            --background-color: #0c0c1e;
-            --text-color: #ffffff;
-            --text-color-secondary: #00fff0;
-            --card-bg: rgba(12, 12, 30, 0.95);
-            --glow-color: rgba(255, 30, 108, 0.3);
-            --table-text: #00fff0;
-            --table-row-hover: rgba(255, 30, 108, 0.2);
-        }
-
-        @keyframes quantum-glow {
-            0% { box-shadow: 0 0 5px var(--glow-color); }
-            50% { box-shadow: 0 0 20px var(--glow-color), 0 0 30px var(--accent-color); }
-            100% { box-shadow: 0 0 5px var(--glow-color); }
-        }
-
-        @keyframes wave {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-5px); }
-            100% { transform: translateY(0px); }
-        }
-
-        @keyframes particle-flow {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 100% 50%; }
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        textarea {
-            font-size: inherit;
-        }
-
-        body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            background-color: var(--background-color);
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(124, 77, 255, 0.1) 0%, transparent 20%),
-                radial-gradient(circle at 90% 80%, rgba(0, 176, 255, 0.1) 0%, transparent 20%),
-                linear-gradient(60deg, rgba(26, 35, 126, 0.1) 0%, transparent 50%);
-            background-attachment: fixed;
-            animation: theme-transition 0.3s ease;
-            text-shadow: 0 0 1px var(--text-color-secondary);
-        }
-
-        .header {
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-            color: white;
-            padding: 2rem 0;
-            margin-bottom: 2rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-            animation: particle-flow 8s linear infinite;
-        }
-
-        .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: relative;
-            z-index: 1;
-        }
-
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .logo {
-            height: 80px;
-            width: auto;
-            transition: transform 0.3s ease;
-            animation: wave 3s ease-in-out infinite;
-        }
-
-        .logo:hover {
-            transform: scale(1.1);
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            color: var(--text-color);
-            text-shadow: 0 0 10px var(--glow-color),
-                         0 0 20px var(--glow-color);
-            letter-spacing: 1px;
-        }
-
-        h2 {
-            font-size: 1.8rem;
-            color: var(--accent-color);
-            margin: 1.5rem 0;
-            padding: 0.5rem 0;
-            border-bottom: 3px solid var(--secondary-color);
-            text-shadow: 0 0 5px var(--glow-color);
-            letter-spacing: 0.5px;
-        }
-
-        h3 {
-            font-size: 1.4rem;
-            color: var(--secondary-color);
-            margin: 1rem 0;
-            text-shadow: 0 0 3px var(--glow-color);
-            letter-spacing: 0.5px;
-        }
-
-        .lab-guide {
-            background: var(--card-bg);
-            border-radius: var(--border-radius);
-            padding: 2rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-            border: 1px solid rgba(124, 77, 255, 0.2);
-            backdrop-filter: blur(10px);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .lab-guide::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(45deg, transparent, rgba(124, 77, 255, 0.1), transparent);
-            transform: translateX(-100%);
-            transition: transform 0.5s ease;
-        }
-
-        .lab-guide:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-            animation: quantum-glow 2s ease-in-out infinite;
-        }
-
-        .lab-guide:hover::before {
-            transform: translateX(100%);
-        }
-
-        .objective, .materials {
-            background: rgba(124, 77, 255, 0.1);
-            padding: 1.8rem;
-            border-radius: var(--border-radius);
-            margin: 1.5rem 0;
-            border-left: 4px solid var(--secondary-color);
-            transition: all 0.3s ease;
-            box-shadow: 0 0 10px var(--glow-color);
-        }
-
-        .objective:hover, .materials:hover {
-            background: rgba(124, 77, 255, 0.15);
-            transform: translateX(5px);
-            border-left-width: 8px;
-        }
-
-        .objective h3, .materials h3 {
-            color: var(--accent-color);
-            margin-bottom: 1rem;
-            text-shadow: 0 0 5px var(--glow-color);
-        }
-
-        .simulation-link {
-            display: inline-block;
-            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--accent-color) 100%);
-            color: white;
-            padding: 12px 24px;
-            border-radius: var(--border-radius);
-            text-decoration: none;
-            margin: 1rem 0;
-            font-weight: 700;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            letter-spacing: 0.5px;
-            text-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-        }
-
-        .simulation-link::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transform: translateX(-100%);
-            transition: transform 0.5s ease;
-        }
-
-        .simulation-link:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0 15px var(--glow-color);
-            text-shadow: 0 0 10px var(--glow-color);
-            letter-spacing: 1px;
-        }
-
-        .simulation-link:hover::before {
-            transform: translateX(100%);
-        }
-
-        table {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
-            margin: 1rem 0;
-            background: var(--card-bg);
-            border-radius: var(--border-radius);
-            overflow: hidden;
-            border: 1px solid var(--secondary-color);
-            box-shadow: 0 0 10px var(--glow-color);
-        }
-
-        th {
-            background: var(--primary-color);
-            color: #ffffff;
-            font-weight: 600;
-            text-shadow: 0 0 5px var(--glow-color);
-            padding: 15px;
-            font-size: 1.1em;
-            letter-spacing: 0.5px;
-            border-bottom: 2px solid var(--secondary-color);
-        }
-
-        td {
-            padding: 12px 15px;
-            color: var(--table-text);
-            border-bottom: 1px solid rgba(124, 77, 255, 0.2);
-            font-size: 1em;
-            letter-spacing: 0.3px;
-            transition: all 0.3s ease;
-        }
-
-        tr {
-            transition: all 0.3s ease;
-            background: transparent;
-        }
-
-        tr:nth-child(even) {
-            background-color: rgba(124, 77, 255, 0.1);
-        }
-
-        tr:hover {
-            background-color: var(--table-row-hover);
-            transform: translateX(5px);
-        }
-
-        tr:hover td {
-            color: var(--text-color);
-            text-shadow: 0 0 5px var(--glow-color);
-        }
-
-        ul, ol {
-            padding-left: 1.5rem;
-            margin: 1rem 0;
-            color: var(--text-color);
-        }
-
-        li {
-            margin-bottom: 0.8rem;
-            transition: all 0.3s ease;
-            padding: 0.3rem 0;
-            letter-spacing: 0.3px;
-        }
-
-        li:hover {
-            transform: translateX(5px);
-            color: var(--accent-color);
-            text-shadow: 0 0 5px var(--glow-color);
-        }
-
-        .footer {
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-            color: white;
-            padding: 2rem 0;
-            margin-top: 3rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .footer::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-            animation: particle-flow 8s linear infinite;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            text-align: center;
-            position: relative;
-            z-index: 1;
-        }
-
-        @media (max-width: 768px) {
-            .header-content {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .logo-container {
-                flex-wrap: wrap;
-                justify-content: center;
-                margin-bottom: 1rem;
-            }
-
-            .logo {
-                height: 60px;
-            }
-
-            .container {
-                padding: 0 15px;
-            }
-
-            .lab-guide {
-                padding: 1.5rem;
-            }
-        }
-
-        /* Quantum-themed scrollbar */
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: var(--background-color);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--secondary-color);
-            border-radius: 5px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--accent-color);
-        }
-
-        /* Theme Switcher Styles */
-        .theme-switcher {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1000;
-            display: flex;
-            gap: 10px;
-            padding: 10px;
-            background: var(--card-bg);
-            border-radius: var(--border-radius);
-            box-shadow: 0 0 15px var(--glow-color);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(124, 77, 255, 0.2);
-        }
-
-        .theme-option {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .theme-option::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            border-radius: 50%;
-            border: 2px solid transparent;
-            transition: all 0.3s ease;
-        }
-
-        .theme-option:hover {
-            transform: scale(1.1);
-        }
-
-        .theme-option.active::after {
-            border-color: var(--accent-color);
-            animation: quantum-spin 2s linear infinite;
-        }
-
-        @keyframes quantum-spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .theme-quantum-dark {
-            background: linear-gradient(135deg, #1a237e, #7c4dff);
-        }
-
-        .theme-quantum-light {
-            background: linear-gradient(135deg, #3f51b5, #7986cb);
-        }
-
-        .theme-quantum-matrix {
-            background: linear-gradient(135deg, #000000, #00ff00);
-        }
-
-        .theme-quantum-neon {
-            background: linear-gradient(135deg, #ff1e6c, #00fff0);
-        }
-
-        /* Add to existing animations */
-        @keyframes theme-transition {
-            0% { opacity: 0; transform: scale(0.98); }
-            100% { opacity: 1; transform: scale(1); }
-        }
-
-        /* Enhanced text styles */
-        p {
-            color: var(--text-color);
-            line-height: 1.8;
-            letter-spacing: 0.3px;
-        }
-
-        /* Add text selection color */
-        ::selection {
-            background: var(--secondary-color);
-            color: var(--text-color);
-            text-shadow: none;
-        }
-
-        .toggle-answer-btn {
-            margin-left: 10px;
-            padding: 2px 10px;
-            font-size: 0.95em;
-            border-radius: 6px;
-            border: 1px solid var(--secondary-color);
-            background: var(--card-bg);
-            color: var(--accent-color);
-            cursor: pointer;
-            transition: background 0.2s, color 0.2s;
-        }
-        .toggle-answer-btn:hover {
-            background: var(--accent-color);
-            color: #fff;
-        }
-        .lab-answer {
-            display: none;
-            margin: 0.5em 0 1em 2em;
-            padding: 0.7em 1em;
-            background: rgba(124,77,255,0.08);
-            border-left: 3px solid var(--accent-color);
-            border-radius: 8px;
-            color: var(--text-color);
-        }
-        .lab-question {
-            display: flex;
-            align-items: center;
-            margin-bottom: 0.5em;
-        }
-        .lab-question-text {
-            flex: 1;
-        }
-        .lab-question-list {
-            list-style: decimal inside;
-            margin: 1em 0 1em 1em;
-            padding: 0;
-        }
-        .lab-question-list li {
-            margin-bottom: 1.2em;
-        }
-        .dice-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1em 0;
-            background: var(--card-bg);
-            border-radius: var(--border-radius);
-            overflow: hidden;
-            box-shadow: 0 0 10px var(--glow-color);
-        }
-        .dice-table th, .dice-table td {
-            border: 1px solid var(--secondary-color);
-            padding: 0.5em 1em;
-            text-align: center;
-            color: var(--table-text);
-            font-size: 1em;
-        }
-        .dice-table th {
-            background: var(--primary-color);
-            color: #fff;
-            font-weight: 600;
-        }
-        .dice-table tr:nth-child(even) td {
-            background: rgba(124, 77, 255, 0.08);
-        }
-        .dice-table .vertical-header {
-            writing-mode: vertical-rl;
-            text-orientation: mixed;
-            background: var(--primary-color);
-            color: #fff;
-            font-weight: 700;
-            font-size: 1.1em;
-            letter-spacing: 2px;
-            text-align: center;
-            border-right: 2px solid var(--secondary-color);
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quantum Lab — Interactive Physics Simulations</title>
+  <meta name="description" content="Interactive quantum physics lab with simulations for wave interference, photoelectric effect, uncertainty principle, and double-slit experiments.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚛️</text></svg>">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #070712; --card: rgba(12,14,28,0.9); --border: rgba(100,80,255,0.15);
+      --text: #d0d0f0; --text-dim: #8888b0; --accent: #6c5ce7; --accent2: #00cec9;
+      --glow: rgba(108,92,231,0.3); --radius: 14px;
+    }
+    body {
+      font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text);
+      min-height: 100vh; overflow-x: hidden; line-height: 1.6;
+      background-image: radial-gradient(ellipse at 20% 50%, rgba(108,92,231,0.06) 0%, transparent 50%),
+                        radial-gradient(ellipse at 80% 50%, rgba(0,206,201,0.04) 0%, transparent 50%);
+    }
+    .container { max-width: 1300px; margin: 0 auto; padding: 20px; }
+
+    /* Header */
+    .header {
+      text-align: center; padding: 30px 20px 10px; position: relative;
+    }
+    .header h1 {
+      font-family: 'Orbitron', sans-serif; font-size: clamp(1.5rem,5vw,3rem);
+      background: linear-gradient(135deg, var(--accent), var(--accent2), var(--accent));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      letter-spacing: 2px; margin-bottom: 6px;
+    }
+    .header .sub { color: var(--text-dim); font-size: 0.95rem; }
+    .header .badges { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-top: 12px; }
+    .header .badge {
+      background: rgba(108,92,231,0.12); border: 1px solid rgba(108,92,231,0.2);
+      padding: 4px 14px; border-radius: 20px; font-size: 0.75rem; color: var(--accent2);
+    }
+
+    /* Theme & controls */
+    .top-bar {
+      display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin: 16px 0;
+    }
+    .top-bar button, .top-bar select {
+      background: var(--card); border: 1px solid var(--border); border-radius: 30px;
+      padding: 8px 18px; color: var(--text); cursor: pointer; font-size: 0.82rem;
+      font-family: inherit; transition: all 0.3s;
+    }
+    .top-bar button:hover, .top-bar select:hover { border-color: var(--accent); background: rgba(108,92,231,0.08); }
+    .top-bar select { appearance: auto; }
+
+    /* Labs */
+    .lab {
+      background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+      margin-bottom: 28px; overflow: hidden; transition: all 0.3s;
+      backdrop-filter: blur(12px);
+    }
+    .lab:hover { border-color: rgba(108,92,231,0.25); }
+    .lab-header {
+      padding: 20px 24px; cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+      background: rgba(108,92,231,0.04); border-bottom: 1px solid transparent; transition: all 0.3s;
+    }
+    .lab-header:hover { background: rgba(108,92,231,0.08); }
+    .lab-header .title { font-weight: 600; font-size: 1.1rem; }
+    .lab-header .title i { color: var(--accent2); margin-right: 8px; }
+    .lab-header .toggle-icon { transition: transform 0.3s; color: var(--text-dim); }
+    .lab.open .lab-header .toggle-icon { transform: rotate(180deg); }
+    .lab.open .lab-header { border-bottom-color: var(--border); }
+    .lab-body { max-height: 0; overflow: hidden; transition: max-height 0.5s ease; }
+    .lab.open .lab-body { max-height: 3000px; }
+    .lab-content { padding: 20px 24px; }
+
+    .lab-content h3 { color: var(--accent2); font-weight: 600; margin: 16px 0 8px; font-size: 1rem; }
+    .lab-content p { color: var(--text-dim); font-size: 0.92rem; margin-bottom: 10px; line-height: 1.7; }
+    .lab-content ul { list-style: none; padding: 0; }
+    .lab-content ul li { padding: 4px 0 4px 20px; position: relative; color: var(--text-dim); font-size: 0.9rem; }
+    .lab-content ul li::before { content: '▸'; position: absolute; left: 0; color: var(--accent); }
+
+    .sim-canvas-wrap {
+      position: relative; width: 100%; border-radius: 10px; overflow: hidden;
+      border: 1px solid var(--border); margin: 12px 0; background: #000;
+    }
+    .sim-canvas-wrap canvas { display: block; width: 100%; height: auto; }
+    .sim-content { margin-top: 12px; }
+
+    .sim-controls { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin: 10px 0; }
+    .sim-controls label { font-size: 0.82rem; color: var(--text-dim); display: flex; align-items: center; gap: 6px; }
+    .sim-controls input[type="range"] { width: 100px; accent-color: var(--accent); }
+    .sim-controls button {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border: none; padding: 6px 16px; border-radius: 20px; color: #fff; font-weight: 600;
+      cursor: pointer; font-size: 0.8rem; transition: all 0.3s; font-family: inherit;
+    }
+    .sim-controls button:hover { transform: scale(1.05); box-shadow: 0 0 16px var(--glow); }
+    .sim-controls .val { color: var(--accent2); font-weight: 600; font-size: 0.85rem; min-width: 30px; }
+
+    /* Table */
+    .obs-table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 0.85rem; }
+    .obs-table th { background: rgba(108,92,231,0.12); color: var(--accent2); padding: 10px 12px; text-align: left; font-weight: 600; }
+    .obs-table td { padding: 8px 12px; border-top: 1px solid var(--border); color: var(--text-dim); }
+    .obs-table tr:hover td { background: rgba(108,92,231,0.04); }
+
+    .q-list { list-style: decimal; padding-left: 20px; margin: 10px 0; }
+    .q-list li { margin-bottom: 10px; color: var(--text-dim); font-size: 0.9rem; }
+    .toggle-ans {
+      margin-left: 8px; padding: 2px 12px; border-radius: 12px; border: 1px solid var(--accent2);
+      background: transparent; color: var(--accent2); cursor: pointer; font-size: 0.78rem; transition: all 0.2s; font-family: inherit;
+    }
+    .toggle-ans:hover { background: rgba(0,206,201,0.1); }
+    .ans-box { display: none; padding: 10px 14px; margin: 6px 0 12px 0; background: rgba(108,92,231,0.06); border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; font-size: 0.88rem; color: var(--text-dim); }
+    .ans-box.show { display: block; }
+
+    .textarea-box { width: 100%; min-height: 60px; background: rgba(0,0,0,0.3); border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px; color: var(--text); font-family: inherit; font-size: 0.88rem; resize: vertical; margin: 8px 0; outline: none; }
+    .textarea-box:focus { border-color: var(--accent); }
+
+    /* Footer */
+    footer {
+      background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 24px; text-align: center; margin-top: 28px;
+    }
+    footer p { color: var(--text-dim); font-size: 0.85rem; }
+    footer .contact-grid {
+      display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 12px;
+    }
+    footer .contact-card {
+      background: rgba(108,92,231,0.06); border: 1px solid var(--border); border-radius: 10px;
+      padding: 10px 16px; font-size: 0.82rem; color: var(--text-dim);
+    }
+    footer .contact-card strong { color: var(--accent2); }
+
+    @media (max-width: 768px) {
+      .container { padding: 12px; }
+      .lab-content { padding: 16px; }
+      .sim-controls { flex-direction: column; align-items: stretch; }
+      .sim-controls input[type="range"] { width: 100%; }
+    }
+  </style>
 </head>
 <body>
-    <div class="theme-switcher">
-        <button id="decrease-font" title="Decrease text size" style="font-size:1.3em;width:32px;height:32px;border-radius:50%;border:none;background:var(--card-bg);color:var(--accent-color);cursor:pointer;box-shadow:0 0 8px var(--glow-color);margin-right:6px;transition:all 0.2s;">-</button>
-        <div class="theme-option theme-quantum-dark active" onclick="setTheme('quantum-dark')" title="Quantum Dark"></div>
-        <div class="theme-option theme-quantum-light" onclick="setTheme('quantum-light')" title="Quantum Light"></div>
-        <div class="theme-option theme-quantum-matrix" onclick="setTheme('quantum-matrix')" title="Quantum Matrix"></div>
-        <div class="theme-option theme-quantum-neon" onclick="setTheme('quantum-neon')" title="Quantum Neon"></div>
-        <button id="increase-font" title="Increase text size" style="font-size:1.3em;width:32px;height:32px;border-radius:50%;border:none;background:var(--card-bg);color:var(--accent-color);cursor:pointer;box-shadow:0 0 8px var(--glow-color);margin-left:6px;transition:all 0.2s;">+</button>
+<div class="container">
+  <div class="header">
+    <h1>⚛ QUANTUM LAB</h1>
+    <p class="sub">Interactive Physics Simulations — KNUST Department of Physics</p>
+    <div class="badges">
+      <span class="badge">Wave Interference</span>
+      <span class="badge">Double Slit</span>
+      <span class="badge">Photoelectric Effect</span>
+      <span class="badge">Uncertainty Principle</span>
     </div>
+  </div>
 
-    <script>
-        function setTheme(theme) {
-            document.documentElement.setAttribute('data-theme', theme);
-            // Update active state of theme options
-            document.querySelectorAll('.theme-option').forEach(option => {
-                option.classList.remove('active');
-                if (option.classList.contains('theme-' + theme)) {
-                    option.classList.add('active');
-                }
-            });
-            // Store the selected theme in localStorage
-            localStorage.setItem('selected-theme', theme);
-        }
+  <div class="top-bar">
+    <button onclick="setTheme('quantum-dark')" id="t-dark" style="border-color:var(--accent);">🌌 Dark</button>
+    <button onclick="setTheme('quantum-light')" id="t-light">☀️ Light</button>
+    <button onclick="setTheme('quantum-matrix')" id="t-matrix">💚 Matrix</button>
+    <button onclick="setTheme('quantum-neon')" id="t-neon">💖 Neon</button>
+    <span style="color:var(--text-dim);font-size:0.8rem;display:flex;align-items:center;gap:4px;">
+      <i class="fas fa-font"></i>
+      <button onclick="changeFont(-1)" style="padding:4px 8px;font-size:0.8rem;">A-</button>
+      <span id="fontVal" style="color:var(--accent2);">16</span>
+      <button onclick="changeFont(1)" style="padding:4px 8px;font-size:0.8rem;">A+</button>
+    </span>
+  </div>
 
-        // Font size scaling logic
-        const MIN_FONT_SIZE = 12;
-        const MAX_FONT_SIZE = 28;
-        const DEFAULT_FONT_SIZE = 16;
-        function setFontSize(size) {
-            size = Math.max(MIN_FONT_SIZE, Math.min(MAX_FONT_SIZE, size));
-            document.body.style.fontSize = size + 'px';
-            localStorage.setItem('font-size', size);
-        }
-        function getFontSize() {
-            return parseInt(localStorage.getItem('font-size')) || DEFAULT_FONT_SIZE;
-        }
-        document.addEventListener('DOMContentLoaded', () => {
-            const savedTheme = localStorage.getItem('selected-theme') || 'quantum-dark';
-            setTheme(savedTheme);
-            // Font size
-            setFontSize(getFontSize());
-            document.getElementById('increase-font').onclick = function() {
-                setFontSize(getFontSize() + 2);
-            };
-            document.getElementById('decrease-font').onclick = function() {
-                setFontSize(getFontSize() - 2);
-            };
-        });
-
-        function toggleAnswer(btn, id) {
-            const ans = document.getElementById(id);
-            if (ans.style.display === 'none') {
-                ans.style.display = 'block';
-                btn.textContent = 'Hide Answer';
-            } else {
-                ans.style.display = 'none';
-                btn.textContent = 'Show Answer';
-            }
-        }
-    </script>
-
-    <header class="header">
-        <div class="header-content">
-            <div class="logo-container">
-                <img src="MCP.png" alt="MCP Logo" class="logo">
-                <img src="COS.png" alt="College of Science Logo" class="logo">
-                <img src="knust-logo_freelogovectors.net_.png" alt="KNUST Logo" class="logo">
-            </div>
-            <h1>Quantum Physics Lab Guides</h1>
-        </div>
-    </header>
-
-    <div class="container">
-        <h1>Quantum Physics Lab Guides</h1>
-
-        <div class="lab-guide">
-            <h2>Uncertainty and Probability</h2>
-            <div class="objective">
-                <h3>🧪 OBJECTIVE</h3>
-                <p>By the end of the lesson, the student will be able to explain the term uncertainty in relation to quantum science.</p>
-                <p><strong>RPK:</strong> The student can perform simple algebraic operations, construct a histogram from frequency tables, solve basic probability exercises (demonstrate with a coin toss).</p>
-            </div>
-            <div class="materials">
-                <h3>✅ MATERIALS</h3>
-                <ul>
-                    <li>Cubes (Dice)</li>
-                    <li>Graph sheets</li>
-                    <li>Worksheets</li>
-                </ul>
-            </div>
-            <h3>📝 ACTIVITIES</h3>
-            <ol>
-                <li>Using questions and answers, find out what the student already knows from the RPK.</li>
-                <li>Let the students brainstorm to give their understanding of "Uncertainty".</li>
-                <li>Let the students attempt to classify the outcome of a few physical events as "certain" or "uncertain".</li>
-                <li>Revise the concept of Standard deviation and its role in the Uncertainty principle.</li>
-                <li>In groups, guide the students to set up two dice with different colored dots, numbered 1 to 6.</li>
-                <li>
-                    <ul>
-                        <li>Ask the students to roll the two Dice 14 times and record the sum of each roll in Observation Table A.</li>
-                        <li>Have a discussion based on the following:<br>(α) Mean<br>(β) Most probable (mode)</li>
-                    </ul>
-                </li>
-                <li>Guide learners to complete the "Observation Table B".</li>
-                <li>Guide learners to construct a frequency table from the "Observation Table B" and discuss it. Name this table "Observation Table C".</li>
-                <li>Guide the students to plot a histogram from the frequency table using their graph sheets and let them discuss their observations.</li>
-                <li>Guide the students to quantify the Uncertainty in terms of Standard deviation using the histogram.</li>
-                <li>Explain the results and discuss the significance of the activities and the results.</li>
-            </ol>
-            <h3>📊 OBSERVATION TABLE A</h3>
-            <p>Roll two dice 14 times and record their sum in the spaces provided below.</p>
-            <img src="sumTotal.png" alt="Observation Table A: Frequency of Dice Sums" style="max-width:100%;margin:1rem 0;">
-            <ol class="lab-question-list">
-                <li>
-                    <div class="lab-question"><span class="lab-question-text">Write down your observation(s) from the table A above.</span>
-                        <button class="toggle-answer-btn" onclick="toggleAnswer(this, 'uncertainty-a1')">Show Answer</button></div>
-                    <div class="lab-answer" id="uncertainty-a1">The sums are not equally likely; some (like 7) appear more often. The distribution is not uniform.</div>
-                </li>
-                <li>
-                    <div class="lab-question"><span class="lab-question-text">What do you think will happen if you continue to roll the two dice a large number of times (100)?</span>
-                        <button class="toggle-answer-btn" onclick="toggleAnswer(this, 'uncertainty-a2')">Show Answer</button></div>
-                    <div class="lab-answer" id="uncertainty-a2">The frequency of each sum will approach the theoretical probability. The most common sum will be 7, and the distribution will form a bell shape.</div>
-                </li>
-            </ol>
-            <h3>📋 OBSERVATION TABLE B</h3>
-            <p>Without rolling the two dice this time, complete the table by filling the blank spaces with possible outcomes of sums when two dice are rolled.</p>
-            <img src="dieTable.png" alt="Observation Table B: All Possible Sums of Two Dice" style="max-width:100%;margin:1rem 0;">
-            <ol class="lab-question-list">
-                <li>
-                    <div class="lab-question"><span class="lab-question-text">Write down your observation from the table B.</span>
-                        <button class="toggle-answer-btn" onclick="toggleAnswer(this, 'uncertainty-b1')">Show Answer</button></div>
-                    <div class="lab-answer" id="uncertainty-b1">There are more ways to get some sums (like 7) than others (like 2 or 12). The number of ways increases to 7, then decreases.<br><img src="dieTableAns.png" alt="Answered Table of Sums" style="max-width:100%;margin:1rem 0;"></div>
-                </li>
-            </ol>
-            <h3>📈 OBSERVATION TABLE C</h3>
-            <p>Construct a frequency table from the Observation Table B above.</p>
-            <img src="dieFrequency.png" alt="Observation Table C: Frequency Table" style="max-width:100%;margin:1rem 0;">
-            <ol class="lab-question-list">
-                <li>
-                    <div class="lab-question"><span class="lab-question-text">Write down your observation from Table C.</span>
-                        <button class="toggle-answer-btn" onclick="toggleAnswer(this, 'uncertainty-c1')">Show Answer</button></div>
-                    <div class="lab-answer" id="uncertainty-c1">The frequency table shows a symmetric distribution centered at 7. The probability of each sum matches the number of ways to roll it.<br><img src="dieFrequencyAns.png" alt="Answered Frequency Table" style="max-width:100%;margin:1rem 0;"></div>
-                </li>
-            </ol>
-            <h3>📉 HISTOGRAM</h3>
-            <p>Draw a HISTOGRAM for Table C on a graph sheet.</p>
-            <img src="diehistogram.png" alt="Histogram of Dice Sums" style="max-width:100%;margin:1rem 0;">
-            <ol class="lab-question-list">
-                <li>
-                    <div class="lab-question"><span class="lab-question-text">Describe your observation on the histogram.</span>
-                        <button class="toggle-answer-btn" onclick="toggleAnswer(this, 'uncertainty-h1')">Show Answer</button></div>
-                    <div class="lab-answer" id="uncertainty-h1">The histogram forms a bell-shaped curve, peaking at 7. This shows the most probable outcome is 7, and the distribution is not uniform.</div>
-                </li>
-            </ol>
-            <h3>📋 OBSERVATION TABLE E</h3>
-            <p>Construct a frequency table for possible outcomes in Observation Table D:</p>
-            <table>
-                <tr>
-                    <th>Sums (x)</th>
-                    <th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th><th>11</th><th>12</th><th>Total</th>
-                </tr>
-                <tr>
-                    <th>Frequency (f)</th>
-                    <td>0</td><td>0</td><td>1</td><td>4</td><td>8</td><td>10</td><td>8</td><td>4</td><td>1</td><td>0</td><td>0</td><td>36</td>
-                </tr>
-                <tr>
-                    <th>fx</th>
-                    <td>0</td><td>0</td><td>4</td><td>20</td><td>48</td><td>70</td><td>64</td><td>36</td><td>10</td><td>0</td><td>0</td><td>254</td>
-                </tr>
-                <tr>
-                    <th>x - x&#773;</th>
-                    <td>0</td><td>0</td><td>-3</td><td>-2</td><td>-1</td><td>0</td><td>1</td><td>1.94</td><td>2.94</td><td>0</td><td>0</td><td></td>
-                </tr>
-                <tr>
-                    <th>(x - x&#773;)²</th>
-                    <td></td><td></td><td>9.36</td><td>4.24</td><td>1.12</td><td>0.004</td><td>0.88</td><td>3.76</td><td>8.64</td><td></td><td></td><td></td>
-                </tr>
-                <tr>
-                    <th>f(x - x&#773;)²</th>
-                    <td></td><td></td><td>9.36</td><td>16.96</td><td>8.96</td><td>0.28</td><td>7.04</td><td></td><td></td><td></td><td></td><td></td>
-                </tr>
-            </table>
-            <div class="lab-question"><span class="lab-question-text">Estimate the standard deviation for the distribution.</span></div>
-            <textarea style="width:100%;min-height:3em;margin:1em 0;" placeholder="Write your answer here..."></textarea>
-
-            <h3>📋 OBSERVATION TABLE F</h3>
-            <p><strong>DICE A / DICE B</strong></p>
-            <table class="dice-table">
-                <tr>
-                    <th rowspan="10" class="vertical-header">DICE B</th>
-                    <th colspan="7" style="text-align:center;">DICE A</th>
-                </tr>
-                <tr>
-                    <th></th><th>1</th><th>1</th><th>2</th><th>5</th><th>6</th><th>6</th>
-                </tr>
-                <tr>
-                    <th>1</th><td>2</td><td>2</td><td>3</td><td>6</td><td>7</td><td>7</td>
-                </tr>
-                <tr>
-                    <th>1</th><td>2</td><td>2</td><td>3</td><td>6</td><td>7</td><td>7</td>
-                </tr>
-                <tr>
-                    <th>2</th><td>3</td><td>3</td><td>4</td><td>7</td><td>8</td><td>8</td>
-                </tr>
-                <tr>
-                    <th>5</th><td>6</td><td>6</td><td>7</td><td>10</td><td>11</td><td>11</td>
-                </tr>
-                <tr>
-                    <th>6</th><td>7</td><td>7</td><td>8</td><td>11</td><td>12</td><td>12</td>
-                </tr>
-                <tr>
-                    <th>6</th><td>7</td><td>7</td><td>8</td><td>11</td><td>12</td><td>12</td>
-                </tr>
-            </table>
-            <style>
-            .dice-table .vertical-header {
-                writing-mode: vertical-rl;
-                text-orientation: mixed;
-                background: var(--primary-color);
-                color: #fff;
-                font-weight: 700;
-                font-size: 1.1em;
-                letter-spacing: 2px;
-                text-align: center;
-                border-right: 2px solid var(--secondary-color);
-            }
-            </style>
-            <div class="lab-question"><span class="lab-question-text">Construct a frequency table for Observation Table F:</span></div>
-            <table>
-                <tr>
-                    <th>Sums (x)</th>
-                    <th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th><th>11</th><th>12</th><th>Total</th>
-                </tr>
-                <tr>
-                    <th>Frequency (f)</th>
-                    <td>4</td><td>4</td><td>1</td><td>0</td><td>4</td><td>10</td><td>4</td><td>0</td><td>1</td><td>4</td><td>4</td><td>36</td>
-                </tr>
-                <tr>
-                    <th>fx</th>
-                    <td>8</td><td>12</td><td>4</td><td>0</td><td>24</td><td>70</td><td>32</td><td>0</td><td>10</td><td>44</td><td>36</td><td>240</td>
-                </tr>
-                <tr>
-                    <th>x - x&#773;</th>
-                    <td>-5</td><td>-4</td><td>-3</td><td>-2</td><td>-1</td><td>0</td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td></td>
-                </tr>
-                <tr>
-                    <th>(x - x&#773;)²</th>
-                    <td>25</td><td>16</td><td>9</td><td>4</td><td>1</td><td>0</td><td>1</td><td>4</td><td>9</td><td>16</td><td>25</td><td>110</td>
-                </tr>
-                <tr>
-                    <th>f(x - x&#773;)²</th>
-                    <td>100</td><td>64</td><td>9</td><td>0</td><td>4</td><td>0</td><td>4</td><td>0</td><td>9</td><td>64</td><td>100</td><td>354</td>
-                </tr>
-            </table>
-            <div class="lab-question"><span class="lab-question-text">Estimate the standard deviation for the distribution.</span></div>
-            <textarea style="width:100%;min-height:3em;margin:1em 0;" placeholder="Write your answer here..."></textarea>
-
-            <div class="lab-question"><span class="lab-question-text">Construct a Histogram for both Observation D and Observation E on different graph sheets.</span></div>
-            <textarea style="width:100%;min-height:3em;margin:1em 0;" placeholder="Write your answer here..."></textarea>
-
-            <div class="lab-question"><span class="lab-question-text">Discuss the Histograms from Observation Tables C, D and E.</span></div>
-            <textarea style="width:100%;min-height:3em;margin:1em 0;" placeholder="Write your answer here..."></textarea>
-
-            <div class="lab-question"><span class="lab-question-text">Observe and discuss the averages and standard deviation of all the histograms.</span></div>
-            <textarea style="width:100%;min-height:3em;margin:1em 0;" placeholder="Write your answer here..."></textarea>
-
-            <div class="lab-question"><span class="lab-question-text">Discuss with the students what the two sets of dice represent in quantum mechanics.</span></div>
-            <textarea style="width:100%;min-height:3em;margin:1em 0;" placeholder="Write your answer here..."></textarea>
-
-            <div class="lab-question"><span class="lab-question-text">Students guess what the rolling of the dice represent.</span></div>
-            <textarea style="width:100%;min-height:3em;margin:1em 0;" placeholder="Write your answer here..."></textarea>
-
-            <div class="lab-question"><span class="lab-question-text">Students state some advantages and disadvantages of using model or set up.</span></div>
-            <textarea style="width:100%;min-height:3em;margin:1em 0;" placeholder="Write your answer here..."></textarea>
-
-            <div class="lab-question"><span class="lab-question-text">Discuss the use of laser for the same procedure and its implications.</span></div>
-            <textarea style="width:100%;min-height:3em;margin:1em 0;" placeholder="Write your answer here..."></textarea>
-            <h3>📝 FOOTNOTE: Quantum Uncertainty</h3>
-            <p>In quantum physics: Particles like electrons don't have a single definite position or momentum before measurement. Instead, they're described by a wavefunction, which gives a probability distribution for each observable. When we say there's "uncertainty" in position or momentum, we mean the spread (standard deviation) of the probability distribution of outcomes if we measured many times.</p>
-            <p><strong>The Key Insight:</strong> Quantum uncertainty is not due to randomness in measurement or instruments — it's due to the fundamental probabilistic nature of the system itself.</p>
-            <ul>
-                <li>In classical statistics, uncertainty reflects lack of knowledge (e.g., we don't know which die face will land).</li>
-                <li>In quantum mechanics, uncertainty reflects inherent indeterminacy — the outcome doesn't exist in a definite state until it is measured.</li>
-            </ul>
-        </div>
-
-        <div class="lab-guide">
-            <h2>Wave Interference</h2>
-            <div class="objective">
-                <h3>🧪 OBJECTIVE</h3>
-                <p>To explore how waves interact with each other and create interference patterns.</p>
-            </div>
-
-            <div class="materials">
-                <h3>✅ MATERIALS</h3>
-                <ul>
-                    <li>Internet-connected device</li>
-                    <li>PhET Wave Interference simulation</li>
-                </ul>
-                <a href="wave-interference_en.html" target="_blank" class="simulation-link">Open Simulation</a>
-            </div>
-
-            <h3>PART 1A: Interface</h3>
-            <ol>
-                <li>Open mechanical wave simulator.</li>
-                <li>Simulate interference patterns for water waves.</li>
-                <li>Simulate interference patterns for sound waves.</li>
-                <li>Sketch the interference pattern.</li>
-            </ol>
-
-            <h3>📝 PART 1B: Interference with Waves (Photons)</h3>
-            <ol>
-                <li>Open the quantum wave simulation tool and select Photon as your particle source.</li>
-                <li>Set up Double Slits.</li>
-                <li>Fire photons from the laser onto the screen</li>
-                <li>Can you guess the pattern that would be formed</li>
-            </ol>
-
-            <h4>🔍 Observation Table A – Photon (Wave Behavior)</h4>
-            <table>
-                <tr>
-                    <th>Condition</th>
-                    <th>What pattern do you see on the screen?</th>
-                    <th>Sketch or describe the pattern</th>
-                </tr>
-                <tr>
-                    <td>Two slits, wave view ON</td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </table>
-            <button class="toggle-answer-btn" onclick="toggleAnswer(this, 'ds-table-a-ans')">Show Answer</button>
-            <div class="lab-answer" id="ds-table-a-ans">
-                <table>
-                    <tr><th>Condition</th><th>What pattern do you see on the screen?</th><th>Sketch or describe the pattern</th></tr>
-                    <tr><td>Two slits, wave view ON</td><td>Alternating bright and dark bands (interference fringes)</td><td>Bright and dark stripes perpendicular to the slits</td></tr>
-                </table>
-            </div>
-
-            <h3>🧪 PART 2: Electrons One at a Time (Quantum Behavior)</h3>
-            <ol>
-                <li>Choose Electron as your particle source.</li>
-                <li>Select Double Slits again.</li>
-                <li>Turn OFF wave view to focus on particle behavior.</li>
-                <li>Click "Send in one at a time".</li>
-                <li>Keep firing electrons and watch the screen build up.</li>
-            </ol>
-
-            <h4>🔍 Observation Table B – Electrons One at a Time</h4>
-            <table>
-                <tr>
-                    <th>Condition</th>
-                    <th>What does the full pattern look like after many electrons?</th>
-                </tr>
-                <tr>
-                    <td>Two slits, electrons sent one at a time</td>
-                    <td></td>
-                </tr>
-            </table>
-            <button class="toggle-answer-btn" onclick="toggleAnswer(this, 'ds-table-b-ans')">Show Answer</button>
-            <div class="lab-answer" id="ds-table-b-ans">
-                <table>
-                    <tr><th>Condition</th><th>What does the full pattern look like after many electrons?</th></tr>
-                    <tr><td>Two slits, electrons sent one at a time</td><td>Interference pattern (fringes) builds up over time, just like with light</td></tr>
-                </table>
-            </div>
-
-            <h3>🧠 CONCLUSION QUESTIONS</h3>
-            <ol class="lab-question-list">
-                <li>
-                    <div class="lab-question"><span class="lab-question-text">What type of pattern appears when two slits are open and photons or electrons are used?</span>
-                        <button class="toggle-answer-btn" onclick="toggleAnswer(this, 'ds-q1')">Show Answer</button></div>
-                    <div class="lab-answer" id="ds-q1">An interference pattern of alternating bright and dark fringes appears, showing wave-like behavior.</div>
-                </li>
-                <li>
-                    <div class="lab-question"><span class="lab-question-text">What surprising thing happens when you send electrons one at a time?</span>
-                        <button class="toggle-answer-btn" onclick="toggleAnswer(this, 'ds-q2')">Show Answer</button></div>
-                    <div class="lab-answer" id="ds-q2">Even when sent one at a time, electrons build up the same interference pattern over time, suggesting each electron interferes with itself.</div>
-                </li>
-                <li>
-                    <div class="lab-question"><span class="lab-question-text">What feature in this experiment shows that electrons behave like waves?</span>
-                        <button class="toggle-answer-btn" onclick="toggleAnswer(this, 'ds-q3')">Show Answer</button></div>
-                    <div class="lab-answer" id="ds-q3">The appearance of an interference pattern (fringes) even for single electrons shows wave-like behavior.</div>
-                </li>
-            </ol>
-        </div>
-
-        <div class="lab-guide">
-            <h2>Double Slit Diffraction</h2>
-            <div class="objective">
-                <h3>🧪 OBJECTIVE</h3>
-                <p>To explore how light and particles like electrons behave when they pass through two slits, and observe the resulting interference patterns.</p>
-                <p><strong>RPK:</strong> Interference, Diffraction, fringes</p>
-            </div>
-
-            <div class="materials">
-                <h3>✅ MATERIALS</h3>
-                <ul>
-                    <li>PhET Quantum Wave Interference simulation</li>
-                </ul>
-                <button onclick="launchDoubleSlit()" class="simulation-link">Open Simulation</button>
-            </div>
-
-            <script>
-                function launchDoubleSlit() {
-                    // Create a link element to trigger the download/launch
-                    const link = document.createElement('a');
-                    link.href = 'quantum-wave-interference_en.jar';
-                    link.download = 'quantum-wave-interference_en.jar';
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
-                }
-            </script>
-
-            <h3>📝 PART 1A: Interface</h3>
-            <ol>
-                <li>Open mechanical wave simulator.</li>
-                <li>Simulate interference patterns for water waves.</li>
-                <li>Simulate interference patterns for sound waves.</li>
-                <li>Sketch the interference pattern.</li>
-            </ol>
-
-            <h3>📝 PART 1B: Interference with Waves (Photons)</h3>
-            <ol>
-                <li>Open the quantum wave simulation tool and select Photon as your particle source.</li>
-                <li>Set up Double Slits.</li>
-                <li>Fire photons from the laser onto the screen</li>
-                <li>Can you guess the pattern that would be formed</li>
-            </ol>
-
-            <h4>🔍 Observation Table A – Photon (Wave Behavior)</h4>
-            <table>
-                <tr>
-                    <th>Condition</th>
-                    <th>What pattern do you see on the screen?</th>
-                    <th>Sketch or describe the pattern</th>
-                </tr>
-                <tr>
-                    <td>Two slits, wave view ON</td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </table>
-            <button class="toggle-answer-btn" onclick="toggleAnswer(this, 'ds-table-a-ans')">Show Answer</button>
-            <div class="lab-answer" id="ds-table-a-ans">
-                <table>
-                    <tr><th>Condition</th><th>What pattern do you see on the screen?</th><th>Sketch or describe the pattern</th></tr>
-                    <tr><td>Two slits, wave view ON</td><td>Alternating bright and dark bands (interference fringes)</td><td>Bright and dark stripes perpendicular to the slits</td></tr>
-                </table>
-            </div>
-
-            <h3>🧪 PART 2: Electrons One at a Time (Quantum Behavior)</h3>
-            <ol>
-                <li>Choose Electron as your particle source.</li>
-                <li>Select Double Slits again.</li>
-                <li>Turn OFF wave view to focus on particle behavior.</li>
-                <li>Click "Send in one at a time".</li>
-                <li>Keep firing electrons and watch the screen build up.</li>
-            </ol>
-
-            <h4>🔍 Observation Table B – Electrons One at a Time</h4>
-            <table>
-                <tr>
-                    <th>Condition</th>
-                    <th>What does the full pattern look like after many electrons?</th>
-                </tr>
-                <tr>
-                    <td>Two slits, electrons sent one at a time</td>
-                    <td></td>
-                </tr>
-            </table>
-            <button class="toggle-answer-btn" onclick="toggleAnswer(this, 'ds-table-b-ans')">Show Answer</button>
-            <div class="lab-answer" id="ds-table-b-ans">
-                <table>
-                    <tr><th>Condition</th><th>What does the full pattern look like after many electrons?</th></tr>
-                    <tr><td>Two slits, electrons sent one at a time</td><td>Interference pattern (fringes) builds up over time, just like with light</td></tr>
-                </table>
-            </div>
-
-            <h3>🧠 CONCLUSION QUESTIONS</h3>
-            <ol class="lab-question-list">
-                <li>
-                    <div class="lab-question"><span class="lab-question-text">What type of pattern appears when two slits are open and photons or electrons are used?</span>
-                        <button class="toggle-answer-btn" onclick="toggleAnswer(this, 'ds-q1')">Show Answer</button></div>
-                    <div class="lab-answer" id="ds-q1">An interference pattern of alternating bright and dark fringes appears, showing wave-like behavior.</div>
-                </li>
-                <li>
-                    <div class="lab-question"><span class="lab-question-text">What surprising thing happens when you send electrons one at a time?</span>
-                        <button class="toggle-answer-btn" onclick="toggleAnswer(this, 'ds-q2')">Show Answer</button></div>
-                    <div class="lab-answer" id="ds-q2">Even when sent one at a time, electrons build up the same interference pattern over time, suggesting each electron interferes with itself.</div>
-                </li>
-                <li>
-                    <div class="lab-question"><span class="lab-question-text">What feature in this experiment shows that electrons behave like waves?</span>
-                        <button class="toggle-answer-btn" onclick="toggleAnswer(this, 'ds-q3')">Show Answer</button></div>
-                    <div class="lab-answer" id="ds-q3">The appearance of an interference pattern (fringes) even for single electrons shows wave-like behavior.</div>
-                </li>
-            </ol>
-        </div>
-
-        <div class="lab-guide">
-            <h2>Photoelectric Effect</h2>
-            <div class="objective">
-                <h3>🧪 OBJECTIVE</h3>
-                <p>To investigate how light can knock electrons out of a metal surface (the photoelectric effect), and explore how this supports the idea that light acts like particles (photons).</p>
-                <p><strong>RPK:</strong> Learners should know about light, intensity of light, the relationship frequency and wavelength of a wave.</p>
-            </div>
-
-            <div class="materials">
-                <h3>✅ MATERIALS</h3>
-                <ul>
-                    <li>PhET Photoelectric Effect simulation</li>
-                </ul>
-                <button onclick="launchPhotoelectric()" class="simulation-link">Open Simulation</button>
-            </div>
-
-            <script>
-                function launchPhotoelectric() {
-                    const link = document.createElement('a');
-                    link.href = 'photoelectric_en.jar';
-                    link.download = 'photoelectric_en.jar';
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
-                }
-            </script>
-
-            <h3>🚀 PART 1: Setup and Controls</h3>
-            <ol>
-                <li>Open the simulation.</li>
-                <li>You'll see:
-                    <ul>
-                        <li>A light source (wavelength and intensity sliders)</li>
-                        <li>A metal surface</li>
-                        <li>A vacuum chamber and ammeter to measure electron flow</li>
-                        <li>A detector</li>
-                    </ul>
-                </li>
-            </ol>
-
-            <h3>PART 2: Explore Photon Energy (Wavelength)</h3>
-            <p>Keep intensity constant (25%). Change wavelength (color) of the light.</p>
-
-            <h4>🔍 Observation Table A – Wavelength vs. Electron Emission</h4>
-            <table>
-                <tr>
-                    <th>Color</th>
-                    <th>Wavelength (nm)</th>
-                    <th>Frequency</th>
-                    <th>General Observation</th>
-                </tr>
-                <tr>
-                    <td>Red</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Orange</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Yellow</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Green</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Blue</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Indigo</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Violet</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </table>
-            <button class="toggle-answer-btn" onclick="toggleAnswer(this, 'pe-table-a-ans')">Show Answer</button>
-            <div class="lab-answer" id="pe-table-a-ans">
-                <table>
-                    <tr><th>Color</th><th>Wavelength (nm)</th><th>Frequency</th><th>General Observation</th></tr>
-                    <tr><td>Red</td><td>~700</td><td>Low</td><td>No electrons ejected</td></tr>
-                    <tr><td>Orange</td><td>~620</td><td>Low-Med</td><td>No electrons ejected</td></tr>
-                    <tr><td>Yellow</td><td>~580</td><td>Medium</td><td>No electrons ejected</td></tr>
-                    <tr><td>Green</td><td>~530</td><td>Medium-High</td><td>Electrons start to be ejected</td></tr>
-                    <tr><td>Blue</td><td>~470</td><td>High</td><td>Electrons ejected</td></tr>
-                    <tr><td>Indigo</td><td>~425</td><td>Very High</td><td>Electrons ejected</td></tr>
-                    <tr><td>Violet</td><td>~400</td><td>Very High</td><td>Electrons ejected</td></tr>
-                </table>
-            </div>
-            <p>Use the ejector graphic or ammeter to tell if electrons are being ejected.</p>
-            <p>💡 Hint: Try moving from shorter to longer wavelengths (violet → red).</p>
-
-            <h3>🔦 PART 3: Explore Intensity (Brightness)</h3>
-            <p>Pick a wavelength that does eject electrons (like violet or UV).</p>
-            <p>Change only intensity of light (keep wavelength the same).</p>
-
-            <h4>🔍 Observation Table B – Intensity vs. Electron Ejection</h4>
-            <table>
-                <tr>
-                    <th>Intensity Level</th>
-                    <th>How does the number of electrons change?</th>
-                </tr>
-                <tr>
-                    <td>Level 10%</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Level 30%</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Level 50%</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Level 70%</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Level 90%</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Level 100%</td>
-                    <td></td>
-                </tr>
-            </table>
-            <button class="toggle-answer-btn" onclick="toggleAnswer(this, 'pe-table-b-ans')">Show Answer</button>
-            <div class="lab-answer" id="pe-table-b-ans">
-                <table>
-                    <tr><th>Intensity Level</th><th>How does the number of electrons change?</th></tr>
-                    <tr><td>Level 10%</td><td>Few electrons ejected</td></tr>
-                    <tr><td>Level 30%</td><td>More electrons ejected</td></tr>
-                    <tr><td>Level 50%</td><td>Even more electrons ejected</td></tr>
-                    <tr><td>Level 70%</td><td>Number increases further</td></tr>
-                    <tr><td>Level 90%</td><td>Almost maximum electrons ejected</td></tr>
-                    <tr><td>Level 100%</td><td>Maximum electrons ejected</td></tr>
-                </table>
-            </div>
-            <p>Watch the number of electrons and the current in the circuit.</p>
-
-            <h3>🧠 CONCLUSION QUESTIONS</h3>
-            <ol class="lab-question-list">
-                <li>
-                    <div class="lab-question"><span class="lab-question-text">Does changing the intensity of low-energy light (e.g., red) cause photoelectrons to be ejected?</span>
-                        <button class="toggle-answer-btn" onclick="toggleAnswer(this, 'pe-q1')">Show Answer</button></div>
-                    <div class="lab-answer" id="pe-q1">No, increasing intensity of low-energy (low-frequency) light does not cause photoelectrons to be ejected if the photon energy is below the threshold.</div>
-                </li>
-                <li>
-                    <div class="lab-question"><span class="lab-question-text">Does increasing the frequency (or using shorter wavelengths) cause photoelectron ejection for a given material e.g. Na?</span>
-                        <button class="toggle-answer-btn" onclick="toggleAnswer(this, 'pe-q2')">Show Answer</button></div>
-                    <div class="lab-answer" id="pe-q2">Yes, increasing the frequency (shorter wavelength) above the threshold causes photoelectron ejection for that material.</div>
-                </li>
-                <li>
-                    <div class="lab-question"><span class="lab-question-text">How does the number of photons (intensity) affect the number of photoelectrons?</span>
-                        <button class="toggle-answer-btn" onclick="toggleAnswer(this, 'pe-q3')">Show Answer</button></div>
-                    <div class="lab-answer" id="pe-q3">Increasing intensity (number of photons) increases the number of photoelectrons ejected, but only if the photon energy is above the threshold.</div>
-                </li>
-                <li>
-                    <div class="lab-question"><span class="lab-question-text">What happens if each photon's energy is below the threshold?</span>
-                        <button class="toggle-answer-btn" onclick="toggleAnswer(this, 'pe-q4')">Show Answer</button></div>
-                    <div class="lab-answer" id="pe-q4">No photoelectrons are ejected, regardless of the intensity of the light.</div>
-                </li>
-                <li>
-                    <div class="lab-question"><span class="lab-question-text">Based on what you observed, why must light behave like particles (photons) in this experiment?</span>
-                        <button class="toggle-answer-btn" onclick="toggleAnswer(this, 'pe-q5')">Show Answer</button></div>
-                    <div class="lab-answer" id="pe-q5">Because only photons with enough energy (above threshold frequency) can eject electrons, showing that energy is delivered in discrete packets (quanta), not continuously as a wave.</div>
-                </li>
-            </ol>
-
-            <h3>🔑 Key Concept: Why This Proves Light Is a Particle</h3>
-            <p>The photoelectric effect doesn't work like a wave:</p>
-            <ul>
-                <li>Increasing brightness (intensity) doesn't help if the frequency is too low.</li>
-                <li>Only high-frequency photons (each with enough energy) can eject electrons.</li>
-                <li>This means energy is delivered in chunks (quanta) — proving light is made of particles!</li>
-            </ul>
-        </div>
+  <!-- LAB 1: Uncertainty & Probability -->
+  <div class="lab open" id="lab1">
+    <div class="lab-header" onclick="toggleLab('lab1')">
+      <span class="title"><i class="fas fa-dice"></i> Uncertainty & Probability</span>
+      <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
     </div>
-
-    <footer class="footer">
-        <div class="footer-content">
-            <p>Department of Physics - Faculty of Physical and Computational Sciences</p>
-            <p>Kwame Nkrumah University of Science and Technology</p>
-            <div class="contact-section">
-                <h3 style="margin:1.2em 0 0.5em 0;font-size:1.2em;color:var(--accent-color);letter-spacing:1px;">For More Information Contact:</h3>
-                <div class="contact-grid">
-                    <div class="contact-person">
-                        <span class="contact-name">Dorcas Attuabea Addo</span><br>
-                        <a class="contact-link" href="https://wa.me/233242334503" target="_blank" title="WhatsApp Dorcas"><span style="font-weight:bold;">WhatsApp:</span> +233 242 334 503</a>
-                    </div>
-                    <div class="contact-person">
-                        <span class="contact-name">Henry Elorm Quarshie</span><br>
-                        <a class="contact-link" href="https://wa.me/233506977836" target="_blank" title="WhatsApp Henry"><span style="font-weight:bold;">WhatsApp:</span> +233 506 977 836</a>
-                    </div>
-                    <div class="contact-person">
-                        <a class="contact-link" href="mailto:mcp.physics@knust.edu.gh"><span style="font-weight:bold;">Email:</span> mcp.physics@knust.edu.gh</a><br>
-                        <a class="contact-link" href="mailto:mathcphy@gmail.com"><span style="font-weight:bold;">Email:</span> mathcphy@gmail.com</a>
-                    </div>
-                    <div class="contact-person">
-                        <a class="contact-link" href="https://physics.knust.edu.gh/mcp/GQuantum-Education" target="_blank"><span style="font-weight:bold;">GQuantum Website</span></a>
-                    </div>
-                </div>
-            </div>
+    <div class="lab-body">
+      <div class="lab-content">
+        <h3>🎯 Objective</h3>
+        <p>Explore the concept of uncertainty in quantum mechanics by investigating probability distributions using dice simulations. Understand how standard deviation quantifies uncertainty.</p>
+        <h3>🧪 Interactive Dice Simulation</h3>
+        <div class="sim-canvas-wrap">
+          <canvas id="diceCanvas" width="700" height="400"></canvas>
         </div>
-    </footer>
-    <style>
-        .contact-section {
-            margin-top: 2em;
-            width: 100%;
-        }
-        .contact-grid {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 2.5em 2em;
-            margin-top: 0.5em;
-            margin-bottom: 0.5em;
-        }
-        .contact-person {
-            background: rgba(255,255,255,0.07);
-            border-radius: 10px;
-            padding: 1em 1.5em;
-            min-width: 220px;
-            box-shadow: 0 2px 8px 0 var(--glow-color);
-            color: var(--text-color);
-            font-size: 1.08em;
-            text-align: left;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .contact-person:hover {
-            transform: translateY(-4px) scale(1.03);
-            box-shadow: 0 6px 18px 0 var(--accent-color);
-        }
-        .contact-name {
-            font-weight: 600;
-            color: var(--secondary-color);
-            font-size: 1.1em;
-        }
-        .contact-link {
-            color: var(--accent-color);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.2s;
-            word-break: break-all;
-        }
-        .contact-link:hover {
-            color: var(--primary-color);
-            text-decoration: underline;
-        }
-        @media (max-width: 700px) {
-            .contact-grid {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 1em;
-            }
-            .contact-person {
-                min-width: 0;
-                width: 100%;
-            }
-        }
-    </style>
+        <div class="sim-controls">
+          <button onclick="rollDice(14)">🎲 Roll 14 times</button>
+          <button onclick="rollDice(100)">🎲 Roll 100 times</button>
+          <button onclick="rollDice(1000)">🎲 Roll 1,000 times</button>
+          <button onclick="resetDice()" style="background:rgba(255,255,255,0.1);color:var(--text);">Reset</button>
+          <label>Rolls: <span class="val" id="diceCount">0</span></label>
+          <label>Mean: <span class="val" id="diceMean">0</span></label>
+          <label>Std Dev: <span class="val" id="diceStd">0</span></label>
+        </div>
+        <h3>📝 Questions</h3>
+        <ol class="q-list">
+          <li>What happens to the distribution shape as you increase the number of rolls? <button class="toggle-ans" onclick="toggleAns(this,'a1')">Show</button><div class="ans-box" id="a1">The distribution approaches a bell-shaped curve centered at 7 (the most probable sum).</div></li>
+          <li>Why is 7 the most common sum? <button class="toggle-ans" onclick="toggleAns(this,'a2')">Show</button><div class="ans-box" id="a2">There are more combinations that sum to 7 (6 ways) than any other number.</div></li>
+          <li>How does the standard deviation change with more rolls? <button class="toggle-ans" onclick="toggleAns(this,'a3')">Show</button><div class="ans-box" id="a3">It converges to the theoretical value (~2.42), becoming more stable.</div></li>
+          <li>What does this tell us about quantum uncertainty? <button class="toggle-ans" onclick="toggleAns(this,'a4')">Show</button><div class="ans-box" id="a4">Quantum uncertainty reflects inherent indeterminacy, not just lack of knowledge. The outcome doesn't exist in a definite state until measured.</div></li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <!-- LAB 2: Wave Interference Simulation -->
+  <div class="lab" id="lab2">
+    <div class="lab-header" onclick="toggleLab('lab2')">
+      <span class="title"><i class="fas fa-water"></i> Wave Interference</span>
+      <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+    </div>
+    <div class="lab-body">
+      <div class="lab-content">
+        <h3>🎯 Objective</h3>
+        <p>Explore how waves interact and create interference patterns — the key to understanding quantum behavior.</p>
+        <div class="sim-canvas-wrap">
+          <canvas id="waveCanvas" width="700" height="380"></canvas>
+        </div>
+        <div class="sim-controls">
+          <label>Sources: <input type="range" id="waveSources" min="1" max="3" value="2" oninput="initWaveSim()"> <span class="val" id="waveSourcesVal">2</span></label>
+          <label>Wavelength: <input type="range" id="waveLen" min="20" max="80" value="50" oninput="initWaveSim()"> <span class="val" id="waveLenVal">50</span></label>
+          <label>Speed: <input type="range" id="waveSpeed" min="1" max="10" value="4" oninput="initWaveSim()"> <span class="val" id="waveSpeedVal">4</span></label>
+          <button id="waveToggleBtn">⏸ Pause</button>
+        </div>
+        <h3>📝 Observation Table — Wave Behavior</h3>
+        <table class="obs-table">
+          <tr><th>Condition</th><th>Pattern Observed</th></tr>
+          <tr><td>One source</td><td>Concentric circular ripples, no interference</td></tr>
+          <tr><td>Two sources, in phase</td><td>Alternating bright/dark bands (interference fringes)</td></tr>
+          <tr><td>Three sources</td><td>More complex pattern with sharper maxima</td></tr>
+        </table>
+        <h3>🧠 Key Insight</h3>
+        <p>When two waves overlap, they can add constructively (bright) or destructively (dark). This interference pattern is the hallmark of wave behavior — and it's exactly what electrons and photons also exhibit!</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- LAB 3: Double Slit Simulation -->
+  <div class="lab" id="lab3">
+    <div class="lab-header" onclick="toggleLab('lab3')">
+      <span class="title"><i class="fas fa-sliders-h"></i> Double Slit — Quantum Behavior</span>
+      <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+    </div>
+    <div class="lab-body">
+      <div class="lab-content">
+        <h3>🎯 Objective</h3>
+        <p>Simulate the famous double-slit experiment with photons and electrons, observing how single particles build an interference pattern over time.</p>
+        <div class="sim-canvas-wrap">
+          <canvas id="dsCanvas" width="700" height="400"></canvas>
+        </div>
+        <div class="sim-controls">
+          <button onclick="firePhoton()">🔦 Fire Photon</button>
+          <button onclick="fireElectron()">⚡ Fire Electron</button>
+          <button onclick="fireBurst()">🔥 Fire 20</button>
+          <button onclick="resetDS()">Reset</button>
+          <label>Particles: <span class="val" id="particleCount">0</span></label>
+          <label id="patternLabel" style="color:var(--accent2);font-weight:600;">Pattern building…</label>
+        </div>
+        <h3>📝 Questions</h3>
+        <ol class="q-list">
+          <li>What pattern appears when two slits are open? <button class="toggle-ans" onclick="toggleAns(this,'ds1')">Show</button><div class="ans-box" id="ds1">An interference pattern of alternating bright and dark fringes appears.</div></li>
+          <li>What's surprising about sending electrons one at a time? <button class="toggle-ans" onclick="toggleAns(this,'ds2')">Show</button><div class="ans-box" id="ds2">Even one at a time, they build the same interference pattern — suggesting each electron interferes with itself.</div></li>
+          <li>What does this reveal about quantum particles? <button class="toggle-ans" onclick="toggleAns(this,'ds3')">Show</button><div class="ans-box" id="ds3">Particles like electrons exhibit wave-particle duality — they behave as waves until measured.</div></li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <!-- LAB 4: Photoelectric Effect -->
+  <div class="lab" id="lab4">
+    <div class="lab-header" onclick="toggleLab('lab4')">
+      <span class="title"><i class="fas fa-sun"></i> Photoelectric Effect</span>
+      <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+    </div>
+    <div class="lab-body">
+      <div class="lab-content">
+        <h3>🎯 Objective</h3>
+        <p>Investigate how light ejects electrons from a metal surface — the experiment that proved light behaves as particles (photons).</p>
+        <div class="sim-canvas-wrap">
+          <canvas id="peCanvas" width="700" height="360"></canvas>
+        </div>
+        <div class="sim-controls">
+          <label>Wavelength: <input type="range" id="peWavelength" min="200" max="700" value="400" oninput="updatePE()"> <span class="val" id="peWavelengthVal">400 nm</span></label>
+          <label>Intensity: <input type="range" id="peIntensity" min="0" max="100" value="50" oninput="updatePE()"> <span class="val" id="peIntensityVal">50%</span></label>
+          <label>Metal: <select id="peMetal" onchange="updatePE()">
+            <option value="sodium">Sodium</option>
+            <option value="potassium">Potassium</option>
+            <option value="calcium">Calcium</option>
+            <option value="copper">Copper</option>
+          </select></label>
+        </div>
+        <h3>📝 Observation Table</h3>
+        <table class="obs-table">
+          <tr><th>Color</th><th>Wavelength</th><th>Frequency</th><th>Electrons Ejected?</th></tr>
+          <tr><td>Red</td><td>~700 nm</td><td>Low</td><td id="pe-red">—</td></tr>
+          <tr><td>Green</td><td>~530 nm</td><td>Medium</td><td id="pe-green">—</td></tr>
+          <tr><td>Blue</td><td>~470 nm</td><td>High</td><td id="pe-blue">—</td></tr>
+          <tr><td>Violet</td><td>~400 nm</td><td>Very High</td><td id="pe-violet">—</td></tr>
+        </table>
+        <h3>🧠 Key Concept</h3>
+        <p>The photoelectric effect proves light is made of particles (photons) because increasing <strong>intensity</strong> doesn't help if the <strong>frequency</strong> is too low. Energy comes in discrete packets (quanta) — each photon must have enough energy to eject an electron.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reference Materials Gallery -->
+  <div class="lab" id="ref-gallery">
+    <div class="lab-header" onclick="toggleLab('ref-gallery')">
+      <span class="title"><i class="fas fa-images"></i> Reference Materials</span>
+      <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+    </div>
+    <div class="lab-body">
+      <div class="lab-content">
+        <div class="ref-grid">
+          <div class="ref-card"><img src="cos_phy.webp" alt="Cosine Physics" loading="lazy"><span>Cosine Physics — Wave function visualization</span></div>
+          <div class="ref-card"><img src="COS.webp" alt="COS" loading="lazy"><span>COS — Trigonometric relationships</span></div>
+          <div class="ref-card"><img src="MCP.webp" alt="Monte Carlo Physics" loading="lazy"><span>MCP — Monte Carlo simulation results</span></div>
+          <div class="ref-card"><img src="dieFrequency.webp" alt="Dice Frequency" loading="lazy"><span>Dice Frequency — Raw frequency distribution</span></div>
+          <div class="ref-card"><img src="dieFrequencyAns.webp" alt="Dice Frequency Answer" loading="lazy"><span>Dice Frequency — Solved analysis</span></div>
+          <div class="ref-card"><img src="dieTable.webp" alt="Dice Table" loading="lazy"><span>Dice Probability Table — Raw data</span></div>
+          <div class="ref-card"><img src="dieTableAns.webp" alt="Dice Table Answer" loading="lazy"><span>Dice Probability Table — Solved</span></div>
+          <div class="ref-card"><img src="diehistogram.webp" alt="Dice Histogram" loading="lazy"><span>Dice Histogram — Visual distribution</span></div>
+          <div class="ref-card"><img src="sumTotal.webp" alt="Sum Total" loading="lazy"><span>Sum Total — Aggregate statistics</span></div>
+          <div class="ref-card"><img src="logos.webp" alt="Logos" loading="lazy"><span>Department & University Logos</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    .ref-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 16px;
+      padding: 8px 0;
+    }
+    .ref-card {
+      background: rgba(0,0,0,0.3);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      transition: all 0.3s;
+    }
+    .ref-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(108,92,231,0.15);
+    }
+    .ref-card img {
+      width: 100%;
+      height: 160px;
+      object-fit: contain;
+      display: block;
+      background: #0a0a18;
+      padding: 8px;
+    }
+    .ref-card span {
+      display: block;
+      padding: 10px 12px;
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      line-height: 1.4;
+    }
+    .ref-card:hover span {
+      color: var(--text);
+    }
+  </style>
+
+  <!-- Footer -->
+  <footer>
+    <p>Department of Physics — Faculty of Physical and Computational Sciences</p>
+    <p style="margin-bottom:12px;">Kwame Nkrumah University of Science and Technology</p>
+    <div class="contact-grid">
+      <div class="contact-card"><strong>Dorcas Attuabea Addo</strong><br>+233 242 334 503</div>
+      <div class="contact-card"><strong>Henry Elorm Quarshie</strong><br>+233 506 977 836</div>
+      <div class="contact-card"><strong>Email:</strong> mcp.physics@knust.edu.gh</div>
+    </div>
+  </footer>
+</div>
+
+<script>
+// Theme
+function setTheme(t) {
+  const colors = {
+    'quantum-dark':   {bg:'#070712',cbg:'#0a0a18',card:'rgba(12,14,28,0.9)',border:'rgba(100,80,255,0.15)',text:'#d0d0f0',dim:'#8888b0',a1:'#6c5ce7',a2:'#00cec9'},
+    'quantum-light':  {bg:'#f0eef8',cbg:'#e8e6f0',card:'rgba(255,255,255,0.85)',border:'rgba(100,80,255,0.12)',text:'#1a1a2e',dim:'#5a5a7a',a1:'#5b4bd6',a2:'#00b894'},
+    'quantum-matrix': {bg:'#000',cbg:'#000',card:'rgba(0,20,0,0.92)',border:'rgba(0,255,0,0.2)',text:'#00ff00',dim:'#00aa00',a1:'#00cc00',a2:'#66ff66'},
+    'quantum-neon':   {bg:'#0c0c1e',cbg:'#0c0c1e',card:'rgba(12,12,30,0.92)',border:'rgba(255,30,108,0.2)',text:'#f0e0f0',dim:'#b0a0b0',a1:'#ff1e6c',a2:'#00fff0'}
+  };
+  const c = colors[t];
+  const root = document.documentElement.style;
+  root.setProperty('--bg', c.bg);
+  root.setProperty('--card', c.card);
+  root.setProperty('--border', c.border);
+  root.setProperty('--text', c.text);
+  root.setProperty('--text-dim', c.dim);
+  root.setProperty('--accent', c.a1);
+  root.setProperty('--accent2', c.a2);
+  document.body.style.background = c.bg;
+  // Highlight active
+  document.querySelectorAll('.top-bar button').forEach(b => b.style.borderColor = 'var(--border)');
+  const btns = {'quantum-dark':'t-dark','quantum-light':'t-light','quantum-matrix':'t-matrix','quantum-neon':'t-neon'};
+  const active = document.getElementById(btns[t]);
+  if (active) active.style.borderColor = 'var(--accent)';
+  localStorage.setItem('qlab-theme', t);
+  window.currentCbg = c.cbg;
+}
+// Load saved theme
+const savedTheme = localStorage.getItem('qlab-theme') || 'quantum-dark';
+setTheme(savedTheme);
+
+function changeFont(d) {
+  const body = document.body;
+  let sz = parseInt(body.style.fontSize) || 16;
+  sz = Math.max(12, Math.min(28, sz + d));
+  body.style.fontSize = sz + 'px';
+  document.getElementById('fontVal').textContent = sz;
+}
+
+// Lab toggle
+function toggleLab(id) {
+  const lab = document.getElementById(id);
+  lab.classList.toggle('open');
+}
+
+// Toggle answer
+function toggleAns(btn, id) {
+  const box = document.getElementById(id);
+  box.classList.toggle('show');
+  btn.textContent = box.classList.contains('show') ? 'Hide' : 'Show';
+}
+
+// ============ DICE SIMULATION ============
+const diceCanvas = document.getElementById('diceCanvas');
+const dctx = diceCanvas.getContext('2d');
+let diceData = new Array(13).fill(0);
+let diceRolls = [];
+
+function rollDice(n) {
+  for (let i = 0; i < n; i++) {
+    const d1 = Math.floor(Math.random()*6) + 1;
+    const d2 = Math.floor(Math.random()*6) + 1;
+    const sum = d1 + d2;
+    diceData[sum]++;
+    diceRolls.push(sum);
+  }
+  drawDiceChart();
+}
+
+function resetDice() {
+  diceData = new Array(13).fill(0);
+  diceRolls = [];
+  drawDiceChart();
+}
+
+function drawDiceChart() {
+  const W = 700, H = 400;
+  dctx.clearRect(0,0,W,H);
+  // Background
+  dctx.fillStyle = window.currentCbg || '#0a0a18';
+  dctx.fillRect(0,0,W,H);
+  
+  const maxVal = Math.max(...diceData.slice(2)) || 1;
+  const barW = (W - 80) / 11;
+  const pad = 10;
+  
+  // Draw bars
+  for (let i = 2; i <= 12; i++) {
+    const x = 40 + (i-2) * (barW + pad);
+    const h = (diceData[i] / maxVal) * (H - 100);
+    const grad = dctx.createLinearGradient(x, H-60, x, H-60-h);
+    grad.addColorStop(0, '#6c5ce7');
+    grad.addColorStop(1, '#00cec9');
+    dctx.fillStyle = grad;
+    dctx.beginPath();
+    dctx.roundRect(x, H-60-h, barW, h, 4);
+    dctx.fill();
+    
+    dctx.fillStyle = '#8888b0';
+    dctx.font = '11px Inter';
+    dctx.textAlign = 'center';
+    dctx.fillText(i, x + barW/2, H - 40);
+    if (diceData[i] > 0) {
+      dctx.fillStyle = '#d0d0f0';
+      dctx.fillText(diceData[i], x + barW/2, H-68-h);
+    }
+  }
+  
+  // Count stats
+  const total = diceRolls.length;
+  let sum = diceRolls.reduce((a,b)=>a+b, 0);
+  const mean = total > 0 ? (sum/total) : 0;
+  let variance = 0;
+  if (total > 0) {
+    variance = diceRolls.reduce((a,b)=>a+(b-mean)**2, 0) / total;
+  }
+  const std = Math.sqrt(variance);
+  
+  document.getElementById('diceCount').textContent = total;
+  document.getElementById('diceMean').textContent = mean.toFixed(2);
+  document.getElementById('diceStd').textContent = std.toFixed(2);
+  
+  // Title
+  dctx.fillStyle = '#6c5ce7';
+  dctx.font = 'bold 14px Inter';
+  dctx.textAlign = 'left';
+  dctx.fillText(`Dice Sum Distribution (n=${total})`, 20, 25);
+}
+
+// roundRect polyfill for canvas
+if (!CanvasRenderingContext2D.prototype.roundRect) {
+  CanvasRenderingContext2D.prototype.roundRect = function(x, y, w, h, r) {
+    if (r > w/2) r = w/2;
+    if (r > h/2) r = h/2;
+    this.moveTo(x + r, y);
+    this.lineTo(x + w - r, y);
+    this.quadraticCurveTo(x + w, y, x + w, y + r);
+    this.lineTo(x + w, y + h - r);
+    this.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+    this.lineTo(x + r, y + h);
+    this.quadraticCurveTo(x, y + h, x, y + h - r);
+    this.lineTo(x, y + r);
+    this.quadraticCurveTo(x, y, x + r, y);
+    this.closePath();
+    return this;
+  };
+}
+
+resetDice();
+
+// ============ WAVE INTERFERENCE ============
+const waveCanvas = document.getElementById('waveCanvas');
+const wctx = waveCanvas.getContext('2d');
+let waveAnimId = null, wavePaused = false;
+let waveTime = 0;
+
+function initWaveSim() {
+  const sources = parseInt(document.getElementById('waveSources').value);
+  document.getElementById('waveSourcesVal').textContent = sources;
+  const wl = parseInt(document.getElementById('waveLen').value);
+  document.getElementById('waveLenVal').textContent = wl;
+  const spd = parseInt(document.getElementById('waveSpeed').value);
+  document.getElementById('waveSpeedVal').textContent = spd;
+}
+
+function drawWaves() {
+  if (wavePaused) { waveAnimId = requestAnimationFrame(drawWaves); return; }
+  const W = 700, H = 380;
+  wctx.fillStyle = window.currentCbg || '#000';
+  wctx.fillRect(0,0,W,H);
+  
+  const sources = parseInt(document.getElementById('waveSources').value);
+  const wl = parseInt(document.getElementById('waveLen').value);
+  const spd = parseInt(document.getElementById('waveSpeed').value);
+  
+  const sourceY = H/2;
+  const sourceXs = [];
+  if (sources === 1) sourceXs.push(W/2);
+  else if (sources === 2) { sourceXs.push(W/2 - 60); sourceXs.push(W/2 + 60); }
+  else { sourceXs.push(W/2 - 100); sourceXs.push(W/2); sourceXs.push(W/2 + 100); }
+  
+  // Draw interference field
+  const imageData = wctx.createImageData(W, H);
+  for (let y = 0; y < H; y++) {
+    for (let x = 0; x < W; x++) {
+      let val = 0;
+      for (const sx of sourceXs) {
+        const dist = Math.sqrt((x-sx)**2 + (y-sourceY)**2);
+        val += Math.sin(dist / wl * Math.PI * 2 - waveTime * spd * 0.05) / Math.sqrt(dist + 10) * 80;
+      }
+      val = Math.max(0, Math.min(255, 128 + val));
+      const idx = (y * W + x) * 4;
+      imageData.data[idx] = val * 0.3;
+      imageData.data[idx+1] = val * 0.7;
+      imageData.data[idx+2] = val;
+      imageData.data[idx+3] = 255;
+    }
+  }
+  wctx.putImageData(imageData, 0, 0);
+  
+  // Draw sources
+  for (const sx of sourceXs) {
+    wctx.beginPath();
+    wctx.arc(sx, sourceY, 6, 0, Math.PI*2);
+    wctx.fillStyle = '#00cec9';
+    wctx.fill();
+    wctx.shadowColor = '#00cec9';
+    wctx.shadowBlur = 15;
+    wctx.fill();
+    wctx.shadowBlur = 0;
+  }
+  
+  waveTime += 0.3;
+  waveAnimId = requestAnimationFrame(drawWaves);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initWaveSim();
+  drawWaves();
+});
+
+document.getElementById('waveToggleBtn').addEventListener('click', function() {
+  wavePaused = !wavePaused;
+  this.textContent = wavePaused ? '▶ Play' : '⏸ Pause';
+});
+
+// ============ DOUBLE SLIT ============
+const dsCanvas = document.getElementById('dsCanvas');
+const dsctx = dsCanvas.getContext('2d');
+let dsData = [];
+let dsCount = 0;
+let dsMode = 'photon'; // photon or electron
+
+function resetDS() {
+  dsData = []; dsCount = 0;
+  document.getElementById('particleCount').textContent = '0';
+  document.getElementById('patternLabel').textContent = 'Ready…';
+  drawDS();
+}
+
+function firePhoton() { dsMode = 'photon'; addParticle(); }
+function fireElectron() { dsMode = 'electron'; addParticle(); }
+function fireBurst() { for (let i = 0; i < 20; i++) addParticle(); }
+
+function addParticle() {
+  // Probability distribution: two-slit interference pattern
+  const x = 350 + (Math.random() - 0.5) * 600;
+  // Simulate interference: probability peaks at certain positions
+  const mainLobe = 100;
+  const interference = Math.sin(x / 20) * 30;
+  const finalX = 350 + (x - 350) * 0.3 + interference;
+  dsData.push({ x: Math.max(10, Math.min(690, finalX)), y: 360 });
+  dsCount++;
+  document.getElementById('particleCount').textContent = dsCount;
+  if (dsCount > 30) document.getElementById('patternLabel').textContent = '🔬 Interference pattern emerging!';
+  if (dsCount > 100) document.getElementById('patternLabel').textContent = '✨ Wave-like pattern clearly visible!';
+  drawDS();
+}
+
+function drawDS() {
+  const W = 700, H = 400;
+  dsctx.fillStyle = window.currentCbg || '#08081a';
+  dsctx.fillRect(0,0,W,H);
+  
+  // Draw slits barrier
+  dsctx.fillStyle = '#2a2a4a';
+  dsctx.fillRect(200, 0, 4, H);
+  dsctx.fillRect(500, 0, 4, H);
+  // Slits
+  dsctx.fillStyle = window.currentCbg || '#08081a';
+  dsctx.fillRect(200, 170, 4, 60);
+  dsctx.fillRect(500, 170, 4, 60);
+  
+  // Draw particles
+  for (const p of dsData) {
+    dsctx.beginPath();
+    dsctx.arc(p.x, p.y, 2, 0, Math.PI*2);
+    dsctx.fillStyle = dsMode === 'photon' ? '#ffd700' : '#00cec9';
+    dsctx.shadowColor = dsctx.fillStyle;
+    dsctx.shadowBlur = 8;
+    dsctx.fill();
+  }
+  dsctx.shadowBlur = 0;
+  
+  // Labels
+  dsctx.fillStyle = '#8888b0';
+  dsctx.font = '11px Inter';
+  dsctx.textAlign = 'center';
+  dsctx.fillText('Source', 350, 30);
+  dsctx.fillText('▽', 350, 55);
+  dsctx.fillText('Slits', 202, 20);
+  dsctx.fillText('Detector Screen', 350, 385);
+  dsctx.fillStyle = '#6c5ce7';
+  dsctx.fillRect(0, 370, W, 3);
+}
+
+resetDS();
+
+// ============ PHOTOELECTRIC ============
+const peCanvas = document.getElementById('peCanvas');
+const pectx = peCanvas.getContext('2d');
+let peTime = 0, peAnimId = null;
+
+const metalData = {
+  sodium: { work: 2.28, color: '#ccccaa' },
+  potassium: { work: 2.30, color: '#bbaa99' },
+  calcium: { work: 2.87, color: '#ddddaa' },
+  copper: { work: 4.70, color: '#cc7744' }
+};
+
+function updatePE() {
+  const wl = parseInt(document.getElementById('peWavelength').value);
+  document.getElementById('peWavelengthVal').textContent = wl + ' nm';
+  const intensity = parseInt(document.getElementById('peIntensity').value);
+  document.getElementById('peIntensityVal').textContent = intensity + '%';
+  
+  const metal = document.getElementById('peMetal').value;
+  const workFunc = metalData[metal].work;
+  const energy = 1240 / wl; // eV
+  const ejected = energy > workFunc;
+  
+  // Update table
+  document.getElementById('pe-red').textContent = (1240/700 > workFunc) ? '✅ Yes' : '❌ No';
+  document.getElementById('pe-red').style.color = (1240/700 > workFunc) ? '#4caf50' : '#f44336';
+  document.getElementById('pe-green').textContent = (1240/530 > workFunc) ? '✅ Yes' : '❌ No';
+  document.getElementById('pe-green').style.color = (1240/530 > workFunc) ? '#4caf50' : '#f44336';
+  document.getElementById('pe-blue').textContent = (1240/470 > workFunc) ? '✅ Yes' : '❌ No';
+  document.getElementById('pe-blue').style.color = (1240/470 > workFunc) ? '#4caf50' : '#f44336';
+  document.getElementById('pe-violet').textContent = (1240/400 > workFunc) ? '✅ Yes' : '❌ No';
+  document.getElementById('pe-violet').style.color = (1240/400 > workFunc) ? '#4caf50' : '#f44336';
+  
+  if (!peAnimId) drawPE();
+}
+
+function drawPE() {
+  const W = 700, H = 360;
+  pectx.fillStyle = window.currentCbg || '#0a0a18';
+  pectx.fillRect(0,0,W,H);
+  
+  const wl = parseInt(document.getElementById('peWavelength').value);
+  const intensity = parseInt(document.getElementById('peIntensity').value);
+  const metal = document.getElementById('peMetal').value;
+  const workFunc = metalData[metal].work;
+  const energy = 1240 / wl;
+  const canEject = energy > workFunc;
+  
+  // Draw light as waves (colored by wavelength)
+  const hue = 700 - wl;
+  const photonColor = `hsl(${hue}, 100%, ${50 + intensity * 0.3}%)`;
+  
+  // Light waves from left
+  for (let i = 0; i < intensity/5; i++) {
+    const offset = i * 12 + peTime;
+    pectx.beginPath();
+    pectx.moveTo(10, 100 + Math.sin(offset * 0.1) * 30 + i * 3);
+    for (let x = 10; x < 300; x += 3) {
+      const y = 100 + Math.sin(x / wl * 10 + peTime * 0.05 + i) * 20 + i * 3;
+      pectx.lineTo(x, y);
+    }
+    pectx.strokeStyle = photonColor;
+    pectx.globalAlpha = 0.2 + intensity * 0.003;
+    pectx.lineWidth = 1.5;
+    pectx.stroke();
+  }
+  pectx.globalAlpha = 1;
+  
+  // Metal surface
+  pectx.fillStyle = metalData[metal].color;
+  pectx.fillRect(300, 180, 30, 120);
+  pectx.fillStyle = '#aaa';
+  pectx.font = '11px Inter';
+  pectx.textAlign = 'center';
+  pectx.fillText(metal.charAt(0).toUpperCase() + metal.slice(1), 315, 250);
+  
+  // Ejected electrons
+  if (canEject) {
+    const numElectrons = Math.floor(intensity / 15) + 1;
+    for (let i = 0; i < numElectrons; i++) {
+      const ex = 340 + (peTime * 0.5 + i * 30) % 300;
+      const ey = 200 + Math.sin(peTime * 0.1 + i * 2) * 20;
+      pectx.beginPath();
+      pectx.arc(ex, ey, 4, 0, Math.PI*2);
+      pectx.fillStyle = '#00cec9';
+      pectx.shadowColor = '#00cec9';
+      pectx.shadowBlur = 10;
+      pectx.fill();
+      pectx.shadowBlur = 0;
+    }
+    // Arrow
+    pectx.beginPath();
+    pectx.moveTo(340, 210);
+    pectx.lineTo(420, 160);
+    pectx.strokeStyle = '#00cec9';
+    pectx.lineWidth = 2;
+    pectx.stroke();
+    pectx.fillStyle = '#00cec9';
+    pectx.font = 'bold 12px Inter';
+    pectx.fillText('e⁻', 430, 160);
+  }
+  
+  // Info box
+  pectx.fillStyle = 'rgba(0,0,0,0.6)';
+  pectx.fillRect(480, 20, 200, 90);
+  pectx.fillStyle = '#8888b0';
+  pectx.font = '11px Inter';
+  pectx.textAlign = 'left';
+  pectx.fillText(`Photon Energy: ${energy.toFixed(2)} eV`, 490, 42);
+  pectx.fillText(`Work Function: ${workFunc.toFixed(2)} eV`, 490, 60);
+  pectx.fillText(`Status: ${canEject ? '✅ Ejecting' : '❌ No ejection'}`, 490, 78);
+  
+  peTime += 1;
+  peAnimId = requestAnimationFrame(drawPE);
+}
+
+updatePE();
+
+// Clean up animation frames
+window.addEventListener('beforeunload', () => {
+  if (waveAnimId) cancelAnimationFrame(waveAnimId);
+  if (peAnimId) cancelAnimationFrame(peAnimId);
+});
+</script>
 </body>
 </html>
